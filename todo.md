@@ -1,5 +1,56 @@
 # To-Do List : Application de Gestion de Budget
 
+# To-Do List : Création des Tables pour l'Application de Gestion de Budget
+
+## 1. Table `Utilisateurs`
+- [x] Créer la table `Utilisateurs` avec les colonnes suivantes :
+  - **id** (clé primaire, auto-incrément)
+  - **firstname** (string, non null)
+  - **lastname** (string, non null)
+  - **username** (string, non nul)
+  - **email** (string, unique, non nul)
+  - **mot_de_passe** (string, haché, non nul)
+  - **date_creation** (date, valeur par défaut : date actuelle)
+
+## 2. Table `Categories`
+- [x] Créer la table `Categories` avec les colonnes suivantes :
+  - **id** (clé primaire, auto-incrément)
+  - **nom** (string, non nul)
+  - **description** (string, optionnel)
+
+## 3. Table `Depenses`
+- [x] Créer la table `Depenses` avec les colonnes suivantes :
+  - **id** (clé primaire, auto-incrément)
+  - **utilisateur_id** (clé étrangère vers `Utilisateurs`, non nul)
+  - **categorie_id** (clé étrangère vers `Categories`, non nul)
+  - **montant** (decimal, non nul)
+  - **date** (date, non nul)
+  - **description** (string, optionnel)
+
+## 4. Table `Revenues`
+- [x] Créer la table `Revenues` avec les colonnes suivantes :
+  - **id** (clé primaire, auto-incrément)
+  - **utilisateur_id** (clé étrangère vers `Utilisateurs`, non nul)
+  - **montant** (decimal, non nul)
+  - **categorie_id** (clé étrangère vers `Categories`, non nul)
+  - **date** (date, non nul)
+  - **description** (string, optionnel)
+
+## 5. Table `Budgets`
+- [ ] Créer la table `Budgets` avec les colonnes suivantes :
+  - **id** (clé primaire, auto-incrément)
+  - **utilisateur_id** (clé étrangère vers `Utilisateurs`, non nul)
+  - **plafond_global** (decimal, non nul)
+  - **plafonds_par_categorie** (JSON, optionnel)
+  - **date_mise_a_jour** (date, valeur par défaut : date actuelle)
+
+
+## 6. Tests et Validation
+- [ ] Vérifier la création des tables dans la base de données.
+- [ ] Tester les relations entre les tables (clés étrangères).
+- [ ] S'assurer que les colonnes respectent les contraintes définies (non nul, unique, etc.).
+
+
 ## 1. Catégories de Dépenses
 Créer les principales catégories de dépenses, claires et distinctes, pour une meilleure organisation :
 
