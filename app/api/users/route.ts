@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { User } from '@/app/types/user';
 import { createUser } from '@/app/controllers/userController';
+import { createDefaultBudget } from '@/app/controllers/budgetController'
 import { validateUser } from '@/app/validators/userValidator';
 
 export async function POST(request: Request) {
@@ -12,5 +13,6 @@ export async function POST(request: Request) {
   }
 
   await createUser(user);
+  await createDefaultBudget(user.id);
   return NextResponse.json({ message: 'Utilisateur créé avec succès.' });
 }
