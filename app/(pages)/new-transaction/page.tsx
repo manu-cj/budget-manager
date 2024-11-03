@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Category } from '@/app/types/category';
 
-export default function NewTransaction() {
+const NewTransaction: React.FC =() => {
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
@@ -114,3 +114,5 @@ export default function NewTransaction() {
     </form>
   );
 }
+
+export default NewTransaction

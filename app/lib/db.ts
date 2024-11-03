@@ -65,7 +65,7 @@ console.log('Les catégories de dépenses et de revenus ont été ajoutées avec
 // Création de la table des dépenses
 db.prepare(`
     CREATE TABLE IF NOT EXISTS expenses (
-        id TEXT PRIMARY KEY,
+        id TEXT PRIMARY KEY NOT NULL,
         amount REAL NOT NULL,
         description TEXT NOT NULL,
         date TEXT NOT NULL,
@@ -79,7 +79,7 @@ db.prepare(`
 // Création de la table des revenus
 db.prepare(`
     CREATE TABLE IF NOT EXISTS revenues (
-        id TEXT PRIMARY KEY, 
+        id TEXT PRIMARY KEY NOT NULL, 
         amount REAL NOT NULL,
         description TEXT NOT NULL,
         date TEXT NOT NULL,
@@ -108,7 +108,7 @@ db.prepare(`
         miscellaneous REAL DEFAULT 25.0,  
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+        FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
     )
 `).run();
 
