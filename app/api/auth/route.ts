@@ -38,7 +38,7 @@ export async function POST(request: Request) {
             response.cookies.set('refreshToken', refreshToken, {
                 httpOnly: true,
                 secure: process.env.NODE_ENV === 'production',
-                maxAge: 1209600, // 2 semaines
+                maxAge: 172800 , // 2 jours, on le mettra à 2 semaines après 1209600 pour 2 semaines
                 sameSite: 'strict',
                 path: '/',
             });
