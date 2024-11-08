@@ -29,8 +29,8 @@ export const createUser = async (user: User): Promise<void> => {
 };
 
 
-export const authenticateUser = async (username: string, password: string): Promise<boolean> => {
-    const user = db.prepare('SELECT * FROM users WHERE username = ?').get(username) as User;
+export const authenticateUser = async (email: string, password: string): Promise<boolean> => {
+    const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email) as User;
     if (!user) {
       return false;
     }

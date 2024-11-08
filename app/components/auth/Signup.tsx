@@ -13,7 +13,7 @@ const Signup: React.FC = () => {
         username: '',
         email: '',
         password: '',
-        passwordRepeat: '' // Initialisation du champ pour la répétition du mot de passe
+        passwordRepeat: ''
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

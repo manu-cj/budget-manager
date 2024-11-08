@@ -16,3 +16,5 @@ export async function POST(request: Request) {
   await createDefaultBudget(user.id);
   return NextResponse.json({ message: 'Utilisateur créé avec succès.' });
 }
+
+
