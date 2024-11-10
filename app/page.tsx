@@ -1,67 +1,67 @@
-'use client';
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Auth from "./components/auth/Auth";
+import { Expense } from "./types/expense";
 
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
-
-export default function RefreshTokenPage() {
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [message, setMessage] = useState<string>('');
-  const router = useRouter();
-
-  const refreshToken = async () => {
-    setStatus('loading');
-    try {
-      const response = await fetch('/api/refresh-token', {
-        method: 'GET',
-        credentials: 'include',
-      });
-
-      const data = await response.json();
-
-      if (response.ok) {
-        setStatus('success');
-        setMessage(data.message);
-      } else {
-        throw new Error(data.error || 'Une erreur est survenue');
-      }
-    } catch (error) {
-      console.error('Erreur lors du rafraîchissement du token:', error);
-      setStatus('error');
-      setMessage(error instanceof Error ? error.message : 'Une erreur inconnue est survenue');
-      
-      setTimeout(() => router.push('/login'), 3000);
-    }
-  };
+export default function ProtectedPage() {
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [expenses, setExpenses] = useState<Expense[]>([]);
 
   useEffect(() => {
-    refreshToken();
+    const checkLogin = async () => {
+      try {
+        const response = await axios.get("/api/protected");
+
+        if (response.status === 200) {
+          setIsLogin(true);
+        } else if (response.status === 401) {
+          setError(response.data.error);
+        } else {
+          setError(response.data.error || "Erreur inconnue");
+        }
+      } catch (error) {
+        setError(`Erreur lors de la requête, ${error}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkLogin();
   }, []);
 
+  useEffect(() => {
+    const fetchExpenses = async () => {
+      try {
+        const response = await axios.get("/api/expenses");
+
+        if (response.status === 200) {
+          console.log(response.data);
+          
+          setExpenses([]);
+        } else if (response.status === 401) {
+          setError(response.data.error);
+        } else {
+          setError(response.data.error || "Erreur inconnue");
+        }
+      } catch (error) {
+        setError(`Erreur lors de la requête, ${error}`);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchExpenses();
+  }, [])
+
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Rafraîchissement du Token</h1>
-      
-      {status === 'loading' && (
-        <p className="text-blue-500">Rafraîchissement en cours...</p>
-      )}
-      
-      {status === 'success' && (
-        <p className="text-green-500">{message}</p>
-      )}
-      
-      {status === 'error' && (
-        <p className="text-red-500">
-          {message}. Vous allez être redirigé vers la page de connexion.
-        </p>
-      )}
-      
-      <button 
-        onClick={refreshToken} 
-        disabled={status === 'loading'}
-        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
-      >
-        Rafraîchir manuellement
-      </button>
+    <div>
+      <h1>Page protégée</h1>
+
+      {loading ? <p>Chargement...</p> : isLogin ? <p>Connecté</p> : <Auth/>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }

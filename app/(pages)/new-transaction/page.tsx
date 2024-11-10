@@ -9,7 +9,7 @@ const NewTransaction: React.FC =() => {
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
-  const [category, setCategory] = useState<string>('');
+  const [category_id, setCategory_id] = useState<number>();
   const [categories, setCategories] = useState<Array<Category>>([]);
   const router = useRouter();
 
@@ -18,6 +18,7 @@ const NewTransaction: React.FC =() => {
       try {
         const response = await axios.get('/api/expense-categories');
         setCategories(response.data);
+        router.push('/')
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
       }
@@ -34,9 +35,9 @@ const NewTransaction: React.FC =() => {
         amount: parseFloat(amount),
         description,
         date,
-        category,
+        category_id,
       });
-      router.push('/');
+      // router.push('/');
     } catch (error) {
       console.error("Erreur lors de l'ajout de la dépense :", error);
     }
@@ -92,14 +93,14 @@ const NewTransaction: React.FC =() => {
         </label>
         <select
           id="category"
-          value={category}
-          onChange={(e) => setCategory(e.target.value)}
+          value={category_id}
+          onChange={(e) => setCategory_id(Number(e.target.value))}
           required
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         >
           <option value="" disabled>Choisissez une catégorie</option>
           {categories.map((cat) => (
-            <option key={cat.id} value={cat.name}>
+            <option key={cat.id} value={cat.id}>
               {cat.name}
             </option>
           ))}

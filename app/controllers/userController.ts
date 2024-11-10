@@ -38,3 +38,18 @@ export const authenticateUser = async (email: string, password: string): Promise
     const isMatch = await bcrypt.compare(password, user.password);
     return isMatch;
   };
+
+  export async function getUserByEmail(email: string): Promise<User | null> {
+    try {
+        const user = db.prepare(`
+            SELECT id, email
+            FROM users
+            WHERE email = ?
+        `).get(email);
+
+        return user ? user as User : null;
+    } catch (error) {
+        console.error('Erreur lors de la récupération des informations utilisateur :', error);
+        throw new Error("Erreur lors de la récupération des informations utilisateur");
+    }
+}

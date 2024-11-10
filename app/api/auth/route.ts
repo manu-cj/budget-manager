@@ -1,4 +1,4 @@
-import { authenticateUser } from '@/app/controllers/userController';
+import { authenticateUser, getUserByEmail } from '@/app/controllers/userController';
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 
@@ -15,11 +15,17 @@ export async function POST(request: Request) {
                 throw new Error("Les clés secrètes pour JWT ne sont pas définies.");
             }
 
+            const user = await getUserByEmail(email);
+
+            if (!user || !user.id) {
+                throw new Error("Utilisateur introuvable.");
+            }
+
             // Générer le token d'accès
-            const token = jwt.sign({ email }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
 
             // Générer le refresh token
-            const refreshToken = jwt.sign({ email }, REFRESH_SECRET, { expiresIn: '14d' });
+            const refreshToken = jwt.sign({  id: user.id, email: user.email }, REFRESH_SECRET, { expiresIn: '14d' });
 
             const response = new NextResponse(JSON.stringify({ message: "Authentification réussie" }), {
                 status: 200,
