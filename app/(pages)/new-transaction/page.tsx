@@ -18,7 +18,7 @@ const NewTransaction: React.FC =() => {
       try {
         const response = await axios.get('/api/expense-categories');
         setCategories(response.data);
-        router.push('/')
+        
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
       }
@@ -37,7 +37,7 @@ const NewTransaction: React.FC =() => {
         date,
         category_id,
       });
-      // router.push('/');
+       router.push('/');
     } catch (error) {
       console.error("Erreur lors de l'ajout de la dépense :", error);
     }

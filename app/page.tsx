@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Auth from "./components/auth/Auth";
 import { Expense } from "./types/expense";
+import MonthlyExpenseSummary from "./components/home/MonthlyExpenseSummary";
+import RemainingBudgetSummary from "./components/home/RemainingBudgetSummary";
 
 export default function ProtectedPage() {
   const [error, setError] = useState<string | null>(null);
@@ -35,7 +37,7 @@ export default function ProtectedPage() {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get("/api/expenses");
+        const response = await axios.get("/api/budget");
 
         if (response.status === 200) {
           console.log(response.data);
@@ -60,7 +62,7 @@ export default function ProtectedPage() {
     <div>
       <h1>Page protégée</h1>
 
-      {loading ? <p>Chargement...</p> : isLogin ? <p>Connecté</p> : <Auth/>}
+      {loading ? <p>Chargement...</p> : isLogin ?<div> <MonthlyExpenseSummary/> <RemainingBudgetSummary/></div>: <Auth/>}
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
