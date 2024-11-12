@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Category } from '@/app/types/category';
-import AddRevenue from '@/app/components/forms/AddRevenue';
 
-const NewTransaction: React.FC =() => {
+const AddRevenue: React.FC =() => {
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
@@ -17,7 +16,7 @@ const NewTransaction: React.FC =() => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/expense-categories');
+        const response = await axios.get('/api/revenue-categories');
         setCategories(response.data);
         
       } catch (error) {
@@ -32,7 +31,7 @@ const NewTransaction: React.FC =() => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/expenses', {
+      await axios.post('/api/revenues', {
         amount: parseFloat(amount),
         description,
         date,
@@ -45,11 +44,8 @@ const NewTransaction: React.FC =() => {
   };
 
   return (
-    <div>
-      <AddRevenue/>
-    
     <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
-      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Ajouter une dépenses</h2>
+      <h2 className="text-2xl font-semibold mb-4 text-gray-700">Ajouter un revenue</h2>
       <div className="mb-4">
         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
           Description
@@ -117,8 +113,7 @@ const NewTransaction: React.FC =() => {
         Ajouter
       </button>
     </form>
-    </div>
   );
 }
 
-export default NewTransaction
+export default AddRevenue

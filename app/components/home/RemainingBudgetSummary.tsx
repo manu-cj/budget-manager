@@ -105,13 +105,13 @@ const RemainingBudgetSummary: React.FC = () => {
         <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
       <div className="flex items-center space-x-2">
         <FaMoneyBillAlt className="text-gray-500 text-2xl" />
-        <h2 className="text-xl font-semibold text-gray-700">
+        <h2 className="text-l font-semibold text-gray-700">
           Budget restant du mois
         </h2>
       </div>
 
       {/* Affichage du montant restant */}
-      <p className="text-3xl font-bold text-gray-800">
+      <p className="text-2xl font-bold text-gray-800">
         {remainingBudget} €
       </p>
 

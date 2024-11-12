@@ -4,7 +4,7 @@ import axios from "axios";
 import { Expense } from "@/app/types/expense";
 import { FaWallet } from "react-icons/fa";
 
-const MonthlyExpenseSummary: React.FC = () => {
+const MonthlyRevenueSummary: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
@@ -12,7 +12,7 @@ const MonthlyExpenseSummary: React.FC = () => {
     useEffect(() => {
         const fetchExpenses = async () => {
             try {
-                const response = await axios.get("/api/expenses");
+                const response = await axios.get("/api/revenues");
 
                 if (response.status === 200) {
                     const fetchedExpenses: Expense[] = response.data.expense;
@@ -58,7 +58,7 @@ const MonthlyExpenseSummary: React.FC = () => {
                     <div className="flex items-center space-x-2">
                         <FaWallet className="text-gray-500 text-2xl" />
                         <h2 className="text-l font-semibold text-gray-700">
-                            Total des dépenses du mois
+                            Total des revenues du mois
                         </h2>
                     </div>
                     <p className="text-2xl font-bold text-gray-800">
@@ -70,4 +70,4 @@ const MonthlyExpenseSummary: React.FC = () => {
     );
 };
 
-export default MonthlyExpenseSummary;
+export default MonthlyRevenueSummary;
