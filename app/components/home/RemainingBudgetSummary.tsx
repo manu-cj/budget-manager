@@ -84,7 +84,7 @@ const RemainingBudgetSummary: React.FC = () => {
     };
 
     fetchExpenses();
-  }, []);
+  }, [monthlyTotal]);
 
   const remainingBudget = totalBudget - monthlyTotal;
   const percentage = (remainingBudget / totalBudget) * 100;
