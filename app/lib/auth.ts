@@ -25,7 +25,8 @@ export function generateAccessToken(user: UserPayload): string {
     try {
       // Vérifier et décoder le refresh token
       const user = jwt.verify(refreshToken, REFRESH_SECRET) as UserPayload;
-  
+      console.log(user);
+      
       // Générer un nouveau token d'accès
       const newAccessToken = generateAccessToken({ id: user.id, email: user.email });
   

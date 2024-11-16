@@ -52,7 +52,7 @@ const MonthlyRevenueSummary: React.FC = () => {
             {loading ? (
                 <p>Chargement...</p>
             ) : error ? (
-                <p>{error}</p>
+                <p className="text-red-800">{error}</p>
             ) : (
                 <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
                     <div className="flex items-center space-x-2">

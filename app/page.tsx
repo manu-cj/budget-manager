@@ -49,7 +49,7 @@ export default function ProtectedPage() {
     <Auth />
   )}
 
-  {error && <p className="text-center text-red-500">{error}</p>}
+  {error && <p className="text-center text-red-800">{error}</p>}
 </div>
 
   );
