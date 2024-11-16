@@ -8,37 +8,54 @@ export const createDefaultBudget = async (userId: string) => {
 };
 
 export const updateBudget = async (userId: string, budget: Budget) => {
-    db.prepare(`
-        UPDATE budgets SET
-            housing = ?,
-            food = ?,
-            transportation = ?,
-            health = ?,
-            leisure = ?,
-            subscriptions = ?,
-            insurance = ?,
-            education = ?,
-            repayments = ?,
-            savings = ?,
-            gifts_and_events = ?,
-            miscellaneous = ?,
-            updated_at = CURRENT_TIMESTAMP
-        WHERE id = ?  
-    `).run(
-        budget.housing,
-        budget.food,
-        budget.transportation,
-        budget.health,
-        budget.leisure,
-        budget.subscriptions,
-        budget.insurance,
-        budget.education,
-        budget.repayments,
-        budget.savings,
-        budget.gifts_and_events,
-        budget.miscellaneous,
-        userId
-    );
+    try {
+        const stmt = db.prepare(`
+            UPDATE budgets SET
+                housing = ?,
+                food = ?,
+                transportation = ?,
+                health = ?,
+                leisure = ?,
+                subscriptions = ?,
+                insurance = ?,
+                education = ?,
+                repayments = ?,
+                savings = ?,
+                gifts_and_events = ?,
+                miscellaneous = ?,
+                updated_at = CURRENT_TIMESTAMP
+            WHERE id = ?  
+        `);
+        const result = stmt.run(
+            budget.housing,
+            budget.food,
+            budget.transportation,
+            budget.health,
+            budget.leisure,
+            budget.subscriptions,
+            budget.insurance,
+            budget.education,
+            budget.repayments,
+            budget.savings,
+            budget.gifts_and_events,
+            budget.miscellaneous,
+            userId
+        );
+
+        if (result.changes === 0) {
+            throw new Error("Aucun budget trouvé ou utilisateur non autorisé");
+        }
+
+        return { success: true, message: "Budget mis à jour avec succès" };
+        
+    } catch (error:unknown) {
+        if (error instanceof Error) {
+            console.error(error);
+            return new Response('Error updating budget: ' + error.message, { status: 500 });
+          }
+          return new Response(JSON.stringify({ error: 'Erreur inconnue' }), { status: 500 });
+        
+    }
 };
 
 export const getBudget = async (userId: string): Promise<Budget | null> => {
@@ -60,7 +77,7 @@ export const getBudget = async (userId: string): Promise<Budget | null> => {
         FROM budgets
         WHERE id = ?
     `).get(userId) as Budget;
-        console.log('hi');
+        console.log(userId);
         
     return row || null;
 };
