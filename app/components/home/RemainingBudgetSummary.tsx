@@ -12,6 +12,7 @@ const RemainingBudgetSummary: React.FC = () => {
   const [totalBudget, setTotalBudget] = useState<number>(0);
   const [showUpdateBudget, setShowUpdateBudget] = useState<boolean>(false);
   const [circlePercentage, setCirclePercentage] = useState<number>(100);
+  const [displayPercentage, setDisplayPercentage] = useState<number>(100); // Nouveau state
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -89,12 +90,16 @@ const RemainingBudgetSummary: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       if (circlePercentage > percentage) {
-        setCirclePercentage(prev => prev - 0.8); // Réduire moins rapidement
+        setCirclePercentage((prev) => Math.max(prev - 0.8, percentage));
       }
-    }, 70); // 50ms pour ralentir l'animation
+
+      if (displayPercentage > percentage) {
+        setDisplayPercentage((prev) => Math.max(prev - 0.8, percentage));
+      }
+    }, 70); // 70ms pour ralentir l'animation
 
     return () => clearInterval(interval);
-  }, [percentage, circlePercentage]);
+  }, [percentage, circlePercentage, displayPercentage]);
 
   return (
     <div>
@@ -142,7 +147,7 @@ const RemainingBudgetSummary: React.FC = () => {
               />
             </svg>
             <span className="absolute text-xl font-semibold text-gray-800">
-              {Math.round(percentage)}%
+              {Math.round(displayPercentage)}%
             </span>
           </div>
 

@@ -49,6 +49,8 @@ const MonthlyExpenseSummary: React.FC = () => {
         fetchExpenses();
     }, []);
 
+
+
     return (
         <div>
             {loading ? (

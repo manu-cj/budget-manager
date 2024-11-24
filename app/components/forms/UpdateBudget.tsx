@@ -14,8 +14,10 @@ const categoryTranslations: Record<string, string> = {
   education: "Éducation",
   repayments: "Remboursements",
   savings: "Économies",
+  animals: "animaux",
   gifts_and_events: "Cadeaux et événements",
   miscellaneous: "Divers",
+  vacation: "vacances"
 };
 
 const UpdateBudget: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -30,8 +32,10 @@ const UpdateBudget: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     education: 0,
     repayments: 0,
     savings: 0,
+    animals: 0,
     gifts_and_events: 0,
     miscellaneous: 0,
+    vacation: 0
   });
 
 
@@ -52,8 +56,10 @@ const fetchBudget = async () => {
                 education: budgetData.education,
                 repayments: budgetData.repayments,
                 savings: budgetData.savings,
+                animals: budgetData.animals,
                 gifts_and_events: budgetData.gifts_and_events,
                 miscellaneous: budgetData.miscellaneous,
+                vacation: budgetData.vacation
             });
         }
         else if (response.status === 401) {
