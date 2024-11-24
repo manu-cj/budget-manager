@@ -28,3 +28,21 @@ export const getExpenses = async (userId: string): Promise<Expense[]> => {
     throw error;
   }
 };
+
+export const getExpensesByOffset = async (
+  userId: string,
+  limit: number,  
+  offset: number   
+): Promise<Expense[]> => {
+  try {
+    const expenses = db.prepare(`
+      SELECT * FROM expenses 
+      WHERE user_id = ? 
+      LIMIT ? OFFSET ?
+    `).all(userId, limit, offset) as Expense[];
+    return expenses;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des dépenses :', error);
+    throw error;
+  }
+};

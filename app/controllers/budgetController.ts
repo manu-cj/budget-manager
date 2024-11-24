@@ -21,8 +21,10 @@ export const updateBudget = async (userId: string, budget: Budget) => {
                 education = ?,
                 repayments = ?,
                 savings = ?,
+                animals = ?,
                 gifts_and_events = ?,
                 miscellaneous = ?,
+                vacation = ?,
                 updated_at = CURRENT_TIMESTAMP
             WHERE id = ?  
         `);
@@ -37,8 +39,10 @@ export const updateBudget = async (userId: string, budget: Budget) => {
             budget.education,
             budget.repayments,
             budget.savings,
+            budget.animals,
             budget.gifts_and_events,
             budget.miscellaneous,
+            budget.vacation,
             userId
         );
 
@@ -71,8 +75,10 @@ export const getBudget = async (userId: string): Promise<Budget | null> => {
             education,
             repayments,
             savings,
+            animals,
             gifts_and_events,
             miscellaneous,
+            vacation,
             updated_at
         FROM budgets
         WHERE id = ?

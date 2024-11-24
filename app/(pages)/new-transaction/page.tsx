@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Category } from '@/app/types/category';
-import AddRevenue from '@/app/components/forms/AddRevenue';
 
 const NewTransaction: React.FC =() => {
   const [amount, setAmount] = useState<string>('');
@@ -46,7 +45,6 @@ const NewTransaction: React.FC =() => {
 
   return (
     <div>
-      <AddRevenue/>
     
     <form onSubmit={handleSubmit} className="max-w-md mx-auto bg-white p-6 rounded-lg shadow-md">
       <h2 className="text-2xl font-semibold mb-4 text-gray-700">Ajouter une dépenses</h2>

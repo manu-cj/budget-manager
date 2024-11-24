@@ -11,8 +11,10 @@ export interface Budget {
     education: number;
     repayments: number;
     savings: number;
+    animals: number;
     gifts_and_events: number;
     miscellaneous: number;
+    vacation: number;
     created_at: string;  // TIMESTAMP format, typiquement en ISO 8601
     updated_at: string;  // TIMESTAMP format, typiquement en ISO 8601
 }

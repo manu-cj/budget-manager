@@ -4,18 +4,17 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Category } from '@/app/types/category';
 
-const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [category_id, setCategory_id] = useState<number>();
   const [categories, setCategories] = useState<Array<Category>>([]);
 
-
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/revenue-categories');
+        const response = await axios.get('/api/expense-categories');
         setCategories(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des catégories :', error);
@@ -29,7 +28,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/revenues', {
+      await axios.post('/api/expenses', {
         amount: parseFloat(amount),
         description,
         date,
@@ -37,17 +36,17 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       });
       window.location.reload();
     } catch (error) {
-      console.error("Erreur lors de l'ajout de la dépense :", error);
+      console.error('Erreur lors de l\'ajout de la dépense :', error);
     }
   };
 
   return (
     <>
 
-      {/* Modal */}
+    
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg overflow-y-auto max-h-[90vh] relative flex flex-col">
-            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Ajouter un revenue</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-gray-700">Ajouter une dépense</h2>
             <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
@@ -111,17 +110,17 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                   ))}
                 </select>
               </div>
-              <div className="flex justify-end space-x-2">
+              <div className="flex justify-end space-x-4">
                 <button
                   type="button"
                   onClick={onClose}
-                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Annuler
                 </button>
                 <button
                   type="submit"
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >
                   Ajouter
                 </button>
@@ -129,9 +128,8 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </form>
           </div>
         </div>
-      
     </>
   );
 };
 
-export default AddRevenue;
+export default AddExpenseModal;

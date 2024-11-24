@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { FaMoneyBillAlt } from "react-icons/fa";
@@ -10,8 +9,10 @@ const RemainingBudgetSummary: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
-  const [totalBudget, setTotalBudget] = useState<number>(0); // Stocke le total du budget
-  const [showUpdateBudget, setShowUpdateBudget] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
+  const [totalBudget, setTotalBudget] = useState<number>(0);
+  const [showUpdateBudget, setShowUpdateBudget] = useState<boolean>(false);
+  const [circlePercentage, setCirclePercentage] = useState<number>(100);
+  const [displayPercentage, setDisplayPercentage] = useState<number>(100); // Nouveau state
 
   useEffect(() => {
     const fetchExpenses = async () => {
@@ -58,7 +59,7 @@ const RemainingBudgetSummary: React.FC = () => {
           const fetchedBudget = response.data.budget as Budget;
 
           const total = Object.entries(fetchedBudget)
-            .filter(([key]) => key !== "updated_at") // Ignore la clé 'updated_at'
+            .filter(([key]) => key !== "updated_at")
             .reduce((acc, [, value]) => acc + value, 0);
 
           setTotalBudget(total);
@@ -80,12 +81,25 @@ const RemainingBudgetSummary: React.FC = () => {
   const remainingBudget = totalBudget - monthlyTotal;
   const percentage = (remainingBudget / totalBudget) * 100;
 
-  // Définition des couleurs en fonction de la progression
   const getColor = () => {
-    if (percentage > 50) return "#38A169"; // > 50% : vert (hex couleur Tailwind)
-    if (percentage > 20) return "#D69E2E"; // 20%-50% : jaune
-    return "#E53E3E"; // < 20% : rouge
+    if (percentage > 50) return "#38A169";
+    if (percentage > 20) return "#D69E2E";
+    return "#E53E3E";
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (circlePercentage > percentage) {
+        setCirclePercentage((prev) => Math.max(prev - 0.8, percentage));
+      }
+
+      if (displayPercentage > percentage) {
+        setDisplayPercentage((prev) => Math.max(prev - 0.8, percentage));
+      }
+    }, 70); // 70ms pour ralentir l'animation
+
+    return () => clearInterval(interval);
+  }, [percentage, circlePercentage, displayPercentage]);
 
   return (
     <div>
@@ -94,7 +108,7 @@ const RemainingBudgetSummary: React.FC = () => {
       ) : error ? (
         <p className="text-red-800">{error}</p>
       ) : (
-        <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
+        <div className="w-full max-w-md p-2 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
           <div className="flex items-center space-x-2">
             <FaMoneyBillAlt className="text-gray-500 text-2xl" />
             <h2 className="text-l font-semibold text-gray-700">
@@ -102,10 +116,8 @@ const RemainingBudgetSummary: React.FC = () => {
             </h2>
           </div>
 
-          {/* Affichage du montant restant */}
           <p className="text-2xl font-bold text-gray-800">{remainingBudget} €</p>
 
-          {/* Jauge circulaire avec animation */}
           <div className="relative flex justify-center items-center">
             <svg
               className="w-24 h-24"
@@ -123,7 +135,7 @@ const RemainingBudgetSummary: React.FC = () => {
               <circle
                 style={{
                   stroke: getColor(),
-                  strokeDasharray: `${percentage} 100`,
+                  strokeDasharray: `${circlePercentage} 100`,
                 }}
                 cx="18"
                 cy="18"
@@ -135,11 +147,10 @@ const RemainingBudgetSummary: React.FC = () => {
               />
             </svg>
             <span className="absolute text-xl font-semibold text-gray-800">
-              {Math.round(percentage)}%
+              {Math.round(displayPercentage)}%
             </span>
           </div>
 
-          {/* Bouton pour afficher la modal */}
           <button
             onClick={() => setShowUpdateBudget(true)}
             className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
@@ -149,7 +160,6 @@ const RemainingBudgetSummary: React.FC = () => {
         </div>
       )}
 
-      {/* Affichage conditionnel de la modal */}
       {showUpdateBudget && (
         <UpdateBudget onClose={() => setShowUpdateBudget(false)} />
       )}

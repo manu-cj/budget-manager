@@ -32,7 +32,7 @@ db.prepare(`
 const expenseCategories = [
     'Logement', 'Nourriture', 'Transport', 'Santé', 'Loisirs',
     'Abonnements', 'Assurances', 'Éducation', 'Remboursements', 
-    'Épargne', 'Cadeaux et Événements', 'Divers'
+    'Épargne', 'Animaux','Cadeaux et Événements', 'Divers', 'Vacances'
 ];
 
 expenseCategories.forEach(category => {
@@ -103,9 +103,11 @@ db.prepare(`
         insurance REAL DEFAULT 75.0,   
         education REAL DEFAULT 50.0,    
         repayments REAL DEFAULT 50.0,    
-        savings REAL DEFAULT 100.0,      
+        savings REAL DEFAULT 100.0,
+        animals REAL DEFAULT 50.0,      
         gifts_and_events REAL DEFAULT 50.0, 
         miscellaneous REAL DEFAULT 25.0,  
+        vacation REAL DEFAULT 50.0,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         FOREIGN KEY (id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE

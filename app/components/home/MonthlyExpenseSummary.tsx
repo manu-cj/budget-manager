@@ -3,11 +3,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Expense } from "@/app/types/expense";
 import { FaWallet } from "react-icons/fa";
+import AddExpenseModal from "../forms/AddExpense";
 
 const MonthlyExpenseSummary: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
+    const [showAddExpense, setShowAddExpense] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
 
     useEffect(() => {
         const fetchExpenses = async () => {
@@ -47,6 +49,8 @@ const MonthlyExpenseSummary: React.FC = () => {
         fetchExpenses();
     }, []);
 
+
+
     return (
         <div>
             {loading ? (
@@ -64,7 +68,16 @@ const MonthlyExpenseSummary: React.FC = () => {
                     <p className="text-2xl font-bold text-gray-800">
                         {monthlyTotal} €
                     </p>
+                    <button
+                        onClick={() => setShowAddExpense(true)}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                    >
+                        Ajouter une dépense
+                    </button>
                 </div>
+            )}
+            {showAddExpense && (
+                <AddExpenseModal onClose={() => setShowAddExpense(false)}/>
             )}
         </div>
     );
