@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { useSwipeable } from "react-swipeable"; // Importation de la bibliothèque
 import axios from "axios";
 import Auth from "./components/auth/Auth";
 
@@ -26,6 +27,22 @@ export default function ProtectedPage() {
     }
   };
 
+  const handleSwipeRight = () => {
+    if (page === "home") setPage("transaction");
+    else if (page === "transaction") setPage("graphique");
+  };
+
+  const handleSwipeLeft = () => {
+    if (page === "graphique") setPage("transaction");
+    else if (page === "transaction") setPage("home");
+  };
+
+  // Gestionnaire des swipes
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleSwipeLeft,
+    onSwipedRight: handleSwipeRight,
+  });
+
   useEffect(() => {
     const checkLogin = async () => {
       try {
@@ -49,37 +66,40 @@ export default function ProtectedPage() {
   }, []);
 
   return (
-    <div className="flex flex-col min-h-screen p-4 bg-gray-100 rounded-lg shadow-md">
-      <div className="flex justify-center mt-10">
-      <ul className="flex space-x-4 bg-gray-100 p-4 rounded-lg shadow-lg">
-        <li>
-          <h2
-            onClick={() => setPage("transaction")}
-            className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
-              ${page === "transaction" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
-          >
-            Transactions
-          </h2>
-        </li>
-        <li>
-          <h1
-            onClick={() => setPage("home")}
-            className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
-              ${page === "home" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
-          >
-            Résumé
-          </h1>
-        </li>
-        <li>
-          <h2
-            onClick={() => setPage("graphique")}
-            className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
-              ${page === "graphique" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
-          >
-            Graphique
-          </h2>
-        </li>
-      </ul>
+    <div
+      {...swipeHandlers}
+      className="flex flex-col min-h-screen p-4 bg-gray-100 rounded-lg shadow-md"
+    >
+      <div className="flex justify-center items-center mt-10 w-full">
+        <ul className="flex space-x-4 bg-gray-100 rounded-lg shadow-lg">
+          <li>
+            <h2
+              onClick={() => setPage("transaction")}
+              className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
+                ${page === "transaction" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
+            >
+              Transactions
+            </h2>
+          </li>
+          <li>
+            <h1
+              onClick={() => setPage("home")}
+              className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
+                ${page === "home" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
+            >
+              Résumé
+            </h1>
+          </li>
+          <li>
+            <h2
+              onClick={() => setPage("graphique")}
+              className={`cursor-pointer text-lg font-semibold px-4 py-2 rounded-lg transition duration-200 ease-in-out 
+                ${page === "graphique" ? "text-blue-600 font-bold" : "text-gray-800 hover:bg-gray-200 hover:text-blue-400"}`}
+            >
+              Graphique
+            </h2>
+          </li>
+        </ul>
       </div>
 
       {loading ? (
