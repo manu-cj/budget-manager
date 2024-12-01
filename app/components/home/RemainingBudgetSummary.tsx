@@ -104,34 +104,39 @@ const RemainingBudgetSummary: React.FC = () => {
   return (
     <div>
       {loading ? (
-        <p>Chargement...</p>
+        <p className="text-text-muted text-center">Chargement...</p>
       ) : error ? (
-        <p className="text-red-800">{error}</p>
+        <p className="text-danger text-center">{error}</p>
       ) : (
-        <div className="w-full max-w-md p-2 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
+        <div className="w-full max-w-md p-6 bg-secondary rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6">
+          {/* Titre et icône */}
           <div className="flex items-center space-x-2">
-            <FaMoneyBillAlt className="text-gray-500 text-2xl" />
-            <h2 className="text-l font-semibold text-gray-700">
+            <FaMoneyBillAlt className="text-accent-dark text-3xl" /> {/* Icône dorée */}
+            <h2 className="text-lg font-bold text-primary">
               Budget restant du mois
             </h2>
           </div>
-
-          <p className="text-2xl font-bold text-gray-800">{remainingBudget} €</p>
-
+  
+          {/* Montant restant */}
+          <p className="text-3xl font-extrabold text-primary">{remainingBudget} €</p>
+  
+          {/* Cercle de pourcentage */}
           <div className="relative flex justify-center items-center">
             <svg
-              className="w-24 h-24"
+              className="w-32 h-32"
               viewBox="0 0 36 36"
               xmlns="http://www.w3.org/2000/svg"
             >
+              {/* Cercle de fond */}
               <circle
-                className="text-gray-300"
+                className="text-secondary-dark"
                 cx="18"
                 cy="18"
                 r="15.9155"
-                strokeWidth="2"
+                strokeWidth="3"
                 fill="none"
               />
+              {/* Cercle progressif */}
               <circle
                 style={{
                   stroke: getColor(),
@@ -140,31 +145,35 @@ const RemainingBudgetSummary: React.FC = () => {
                 cx="18"
                 cy="18"
                 r="15.9155"
-                strokeWidth="2"
+                strokeWidth="3"
                 strokeLinecap="round"
                 transform="rotate(-90 18 18)"
                 fill="none"
               />
             </svg>
-            <span className="absolute text-xl font-semibold text-gray-800">
+            <span className="absolute text-2xl font-semibold text-primary">
               {Math.round(displayPercentage)}%
             </span>
           </div>
-
+  
+          {/* Bouton d'action */}
           <button
             onClick={() => setShowUpdateBudget(true)}
-            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            className="bg-accent text-text-light py-3 px-6 rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
           >
             Mettre à jour le budget
           </button>
         </div>
       )}
-
+  
+      {/* Modale de mise à jour */}
       {showUpdateBudget && (
         <UpdateBudget onClose={() => setShowUpdateBudget(false)} />
       )}
     </div>
   );
+  
+  
 };
 
 export default RemainingBudgetSummary;

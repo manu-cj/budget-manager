@@ -50,37 +50,43 @@ const MonthlyExpenseSummary: React.FC = () => {
     }, []);
 
 
-
     return (
         <div>
-            {loading ? (
-                <p>Chargement...</p>
-            ) : error ? (
-                <p className="text-red-800">{error}</p>
-            ) : (
-                <div className="w-full max-w-md p-6 bg-white rounded-2xl shadow-md border border-gray-200 flex flex-col items-center space-y-4">
-                    <div className="flex items-center space-x-2">
-                        <FaWallet className="text-gray-500 text-2xl" />
-                        <h2 className="text-l font-semibold text-gray-700">
-                            Total des dépenses du mois
-                        </h2>
-                    </div>
-                    <p className="text-2xl font-bold text-gray-800">
-                        {monthlyTotal} €
-                    </p>
-                    <button
-                        onClick={() => setShowAddExpense(true)}
-                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
-                    >
-                        Ajouter une dépense
-                    </button>
-                </div>
-            )}
-            {showAddExpense && (
-                <AddExpenseModal onClose={() => setShowAddExpense(false)}/>
-            )}
+          {loading ? (
+            <p className="text-text-muted text-center">Chargement...</p>
+          ) : error ? (
+            <p className="text-danger text-center">{error}</p>
+          ) : (
+            <div className="w-full max-w-md p-6 bg-secondary rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6">
+              {/* Titre et icône */}
+              <div className="flex items-center space-x-2">
+                <FaWallet className="text-accent-dark text-3xl" /> {/* Icône dorée */}
+                <h2 className="text-lg font-bold text-primary">
+                  Total des dépenses du mois
+                </h2>
+              </div>
+      
+              {/* Montant total */}
+              <p className="text-3xl font-extrabold text-primary">{monthlyTotal} €</p>
+      
+              {/* Bouton d'ajout */}
+              <button
+                onClick={() => setShowAddExpense(true)}
+                className="bg-accent text-text-light py-3 px-6 rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
+              >
+                Ajouter une dépense
+              </button>
+            </div>
+          )}
+      
+          {/* Modale d'ajout */}
+          {showAddExpense && (
+            <AddExpenseModal onClose={() => setShowAddExpense(false)} />
+          )}
         </div>
-    );
+      );
+      
+      
 };
 
 export default MonthlyExpenseSummary;
