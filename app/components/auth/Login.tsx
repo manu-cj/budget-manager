@@ -31,46 +31,64 @@ const Login: React.FC = () => {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gray-900">
-            <div className="w-full max-w-md p-8 space-y-6 rounded-lg shadow-lg bg-gray-800">
-                <h2 className="text-2xl font-bold text-center text-white">Sign Up</h2>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-300">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            value={email}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            placeholder="Enter your email"
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="password" className="block text-sm font-medium text-gray-300">Password</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={password}
-                            onChange={handleChange}
-                            className="w-full px-3 py-2 mt-1 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                            placeholder="Create a password"
-                        />
-                    </div>
-                    
-                    <button
-                        type="submit"
-                        className="w-full px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    >
-                        Sign Up
-                    </button>
-                </form>
-            </div>
+        <div className="flex items-center justify-center bg-background">
+          <div className="w-full max-w-md p-8 space-y-6 bg-primary-light">
+            {/* Titre */}
+            <h2 className="text-2xl font-bold text-center text-text-light">
+              Login
+            </h2>
+      
+            {/* Formulaire */}
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Champ email */}
+              <div>
+                <label
+                  htmlFor="email"
+                  className="block text-sm font-medium text-secondary-dark"
+                >
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={email}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Entrez votre email"
+                />
+              </div>
+      
+              {/* Champ mot de passe */}
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium text-secondary-dark"
+                >
+                  Password
+                </label>
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={password}
+                  onChange={handleChange}
+                  className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
+                  placeholder="Votre mot de passe"
+                />
+              </div>
+      
+              {/* Bouton */}
+              <button
+                type="submit"
+                className="w-full px-4 py-2 text-text-light bg-accent rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark"
+              >
+                Login
+              </button>
+            </form>
+          </div>
         </div>
-    );
-
+      );  
 };
 
 export default Login;
