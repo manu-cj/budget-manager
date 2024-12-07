@@ -126,9 +126,9 @@ const ExpenseSummary: React.FC = () => {
         onScroll={handleScroll}
       >
         <ul className="space-y-2">
-          {expenses.map((expense) => (
+          {expenses.map((expense, index) => (
             <li
-              key={expense.id}
+              key={`${expense.id}-${index}`}
               className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200"
             >
               <div className="flex items-center space-x-4">
