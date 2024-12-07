@@ -118,7 +118,7 @@ const RemainingBudgetSummary: React.FC = () => {
           </div>
   
           {/* Montant restant */}
-          <p className="text-3xl font-extrabold text-primary">{remainingBudget} €</p>
+          <p className="text-3xl font-extrabold text-primary">{remainingBudget.toFixed(2)} €</p>
   
           {/* Cercle de pourcentage */}
           <div className="relative flex justify-center items-center">

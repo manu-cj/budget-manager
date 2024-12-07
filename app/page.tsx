@@ -74,7 +74,7 @@ export default function ProtectedPage() {
       ) : isLogin ? (
         <div
           {...swipeHandlers}
-          className="flex flex-col min-h-screen p-8 bg-background text-primary"
+          className="flex flex-col min-h-screen bg-background text-primary"
         >
           {/* Barre de navigation */}
           <div className="flex justify-center items-center mt-8 w-full">
@@ -122,7 +122,7 @@ export default function ProtectedPage() {
           </div>
 
           {/* Contenu avec animation */}
-          <div className="relative flex-grow mt-8 overflow-hidden">
+          <div className="relative flex-grow mt-8 overflow-y-scroll">
             <AnimatePresence initial={false} custom={direction}>
               <motion.div
                 key={page} // Clé unique pour chaque page

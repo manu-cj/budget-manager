@@ -28,6 +28,8 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
     e.preventDefault();
 
     try {
+      console.log(category_id);
+      
       await axios.post('/api/expenses', {
         amount: parseFloat(amount),
         description,
@@ -100,7 +102,7 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
-                  <option value="" disabled>
+                  <option value="">
                     Choisissez une catégorie
                   </option>
                   {categories.map((cat) => (
