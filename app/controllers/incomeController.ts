@@ -26,3 +26,22 @@ export const getRevenues = async (userId: string): Promise<Revenue[]> => {
     throw error;
   }
 };
+
+export const getRevenuesByOffset = async (
+  userId: string,
+  limit: number,  
+  offset: number   
+): Promise<Revenue[]> => {
+  try {
+    const revenues = db.prepare(`
+      SELECT * FROM revenues 
+      WHERE user_id = ?
+      ORDER BY DATE(date) DESC 
+      LIMIT ? OFFSET ?
+    `).all(userId, limit, offset) as Revenue[];
+    return revenues;
+  } catch (error) {
+    console.error('Erreur lors de la récupération des revenues :', error);
+    throw error;
+  }
+};

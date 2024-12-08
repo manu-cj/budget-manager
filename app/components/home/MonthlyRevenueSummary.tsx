@@ -66,7 +66,7 @@ const MonthlyRevenueSummary: React.FC = () => {
               </div>
       
               {/* Montant total */}
-              <p className="text-3xl font-extrabold text-primary">{monthlyTotal} €</p>
+              <p className="text-3xl font-extrabold text-primary">{monthlyTotal.toFixed(2)} €</p>
       
               {/* Bouton d'ajout */}
               <button

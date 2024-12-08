@@ -96,7 +96,7 @@ const RemainingBudgetSummary: React.FC = () => {
       if (displayPercentage > percentage) {
         setDisplayPercentage((prev) => Math.max(prev - 0.8, percentage));
       }
-    }, 70); // 70ms pour ralentir l'animation
+    }, 30); // 70ms pour ralentir l'animation
 
     return () => clearInterval(interval);
   }, [percentage, circlePercentage, displayPercentage]);

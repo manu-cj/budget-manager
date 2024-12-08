@@ -20,7 +20,7 @@ export const createExpense = async (expense: Expense, userId: string): Promise<v
 export const getExpenses = async (userId: string): Promise<Expense[]> => {
   try {
     const expenses = db.prepare(`
-      SELECT * FROM expenses WHERE user_id = ?
+      SELECT * FROM expenses WHERE user_id = ? ORDER BY DATE(date) DESC 
     `).all(userId)as Expense[];
     return expenses;
   } catch (error) {
@@ -37,8 +37,9 @@ export const getExpensesByOffset = async (
   try {
     const expenses = db.prepare(`
       SELECT * FROM expenses 
-      WHERE user_id = ? 
-      LIMIT ? OFFSET ?
+      WHERE user_id = ?
+      ORDER BY DATE(date) DESC 
+      LIMIT ? OFFSET ? 
     `).all(userId, limit, offset) as Expense[];
     return expenses;
   } catch (error) {

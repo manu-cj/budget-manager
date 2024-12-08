@@ -3,20 +3,12 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import axios from "axios";
 import {
-  FaHome,
-  FaUtensils,
-  FaBus,
-  FaHeartbeat,
-  FaSmile,
-  FaRedo,
-  FaShieldAlt,
-  FaBook,
+  FaBriefcase,
+  FaChartLine,
+  FaShoppingCart,
   FaMoneyBillWave,
-  FaPiggyBank,
-  FaPaw,
-  FaGift,
   FaQuestionCircle,
-  FaPlane,
+  FaCube,
 } from "react-icons/fa";
 
 type Expense = {
@@ -27,7 +19,7 @@ type Expense = {
   category_id: number;
 };
 
-const AllExpenses: React.FC = () => {
+const AllRevenues: React.FC = () => {
   const [expenses, setExpenses] = useState<Expense[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -36,21 +28,12 @@ const AllExpenses: React.FC = () => {
   const [hasMore, setHasMore] = useState<boolean>(true);
   const loadedIds = useRef(new Set<number>());
 
-  const categoryIcons: Record<number, JSX.Element> = {
-    1: <FaHome className="text-indigo-500 text-2xl md:text-3xl" />,
-    2: <FaUtensils className="text-green-500 text-2xl md:text-3xl" />,
-    3: <FaBus className="text-blue-500 text-2xl md:text-3xl" />,
-    4: <FaHeartbeat className="text-red-500 text-2xl md:text-3xl" />,
-    5: <FaSmile className="text-yellow-500 text-2xl md:text-3xl" />,
-    6: <FaRedo className="text-orange-500 text-2xl md:text-3xl" />,
-    7: <FaShieldAlt className="text-teal-500 text-2xl md:text-3xl" />,
-    8: <FaBook className="text-blue-400 text-2xl md:text-3xl" />,
-    9: <FaMoneyBillWave className="text-green-400 text-2xl md:text-3xl" />,
-    10: <FaPiggyBank className="text-pink-500 text-2xl md:text-3xl" />,
-    11: <FaPaw className="text-brown-500 text-2xl md:text-3xl" />,
-    12: <FaGift className="text-purple-500 text-2xl md:text-3xl" />,
-    13: <FaQuestionCircle className="text-gray-500 text-2xl md:text-3xl" />,
-    14: <FaPlane className="text-cyan-500 text-2xl md:text-3xl" />,
+  const categoryIcons: Record<string, JSX.Element> = {
+    1: <FaMoneyBillWave className="text-green-500 text-2xl md:text-3xl" />,
+    2: <FaBriefcase className="text-blue-500 text-2xl md:text-3xl" />,
+    3: <FaChartLine className="text-indigo-500 text-2xl md:text-3xl" />,
+    4: <FaShoppingCart className="text-orange-500 text-2xl md:text-3xl" />,
+    5: <FaCube className="text-gray-500 text-2xl md:text-3xl" />,
   };
 
   const getIconByCategory = (categoryId: number) =>
@@ -65,7 +48,7 @@ const AllExpenses: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.get("/api/expenses-by-page", {
+      const response = await axios.get("/api/revenues-by-page", {
         params: { limit, offset },
         withCredentials: true,
       });
@@ -144,7 +127,7 @@ const AllExpenses: React.FC = () => {
                 </div>
               </div>
               <div className="flex flex-col items-end">
-                <p className="text-lg font-semibold text-orange-600">
+                <p className="text-lg font-semibold text-green-600">
                   {expense.amount.toFixed(2)} €
                 </p>
               </div>
@@ -164,4 +147,4 @@ const AllExpenses: React.FC = () => {
   );
 };
 
-export default AllExpenses;
+export default AllRevenues;

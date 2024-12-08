@@ -22,7 +22,8 @@ const Login: React.FC = () => {
                 email,
                 password
             });
-            console.log("Compte créé avec succès :", response.data);
+            console.log("Connexion réussi :", response.data);
+            window.location.reload();
         } catch (error) {
             console.error("Erreur lors de la connection :", error);
         }
