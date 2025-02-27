@@ -56,22 +56,24 @@ const MonthlyRevenueSummary: React.FC = () => {
           ) : error ? (
             <p className="text-danger text-center">{error}</p> 
           ) : (
-            <div className="w-full max-w-md p-6 bg-secondary rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6">
-              {/* Titre et icône */}
-              <div className="flex items-center space-x-2">
-                <FaWallet className="text-accent-dark text-3xl" /> {/* Icône dorée */}
-                <h2 className="text-lg font-bold text-primary">
+            <div className="w-full max-w-md p-0 bg-secondary rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6 pb-6 pr-6 pl-6">
+            {/* Titre et icône */}
+            <div className="w-72 p-4 rounded-2xl flex flex-col space-y-2 relative">
+                <div className="absolute -top-6 -left-10 bg-green-600 p-5 rounded-full border-8 border-background">
+                <FaWallet className="text-white text-xl" />
+                </div>
+              
+            </div>
+              <h2 className="text-lg font-bold text-primary">
                   Total des revenus du mois
                 </h2>
-              </div>
-      
               {/* Montant total */}
               <p className="text-3xl font-extrabold text-primary">{monthlyTotal.toFixed(2)} €</p>
       
               {/* Bouton d'ajout */}
               <button
                 onClick={() => setShowAddRevenue(true)}
-                className="bg-accent text-text-light py-3 px-6 rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
+                className="bg-green-600 text-text-light py-3 px-6 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
               >
                 Ajouter un revenu
               </button>

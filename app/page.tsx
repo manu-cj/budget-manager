@@ -129,7 +129,7 @@ export default function ProtectedPage() {
                 custom={direction}
                 initial={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
+                exit={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute w-full h-full"
               >

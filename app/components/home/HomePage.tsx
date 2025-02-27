@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
 
     return(
         <>
-        <div className="flex flex-col sm:flex-row sm:space-x-8 p-4 bg-background rounded-lg flex-1 gap-4">
+        <div className="flex flex-col sm:flex-row sm:space-x-8 p-4 bg-background rounded-lg flex-1 gap-8">
             <MonthlyExpenseSummary />
             <MonthlyRevenueSummary />
             <RemainingBudgetSummary />

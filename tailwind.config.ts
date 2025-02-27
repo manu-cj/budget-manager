@@ -15,7 +15,7 @@ const config: Config = {
           dark: "#000000", // Noir pur pour le contraste maximal
         },
         secondary: {
-          DEFAULT: "#F5F5F5", // Blanc cassé pour les fonds élégants
+          DEFAULT: "#F5FFFF", // Blanc cassé pour les fonds élégants
           light: "#FFFFFF", // Blanc pur pour les zones lumineuses
           dark: "#E5E5E5", // Gris doux pour les bordures ou arrière-plans discrets
         },

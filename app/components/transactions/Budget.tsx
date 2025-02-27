@@ -32,7 +32,7 @@ const Budget: React.FC = () => {
               Revenus
             </button>
           </div>
-          <div className="container mx-auto px-4">
+          <div className="container mx-auto px-1">
             {request === 'Expenses' ? <AllExpenses /> : <AllRevenues />}
           </div>
         </>
