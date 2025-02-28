@@ -2,95 +2,91 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Expense } from "@/app/types/expense";
-import { FaWallet } from "react-icons/fa";
+
 import AddExpenseModal from "../forms/AddExpense";
+import TotalExpenses from "../ui/card/BudgetCard";
 
 const MonthlyExpenseSummary: React.FC = () => {
-    const [error, setError] = useState<string | null>(null);
-    const [loading, setLoading] = useState<boolean>(true);
-    const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
-    const [showAddExpense, setShowAddExpense] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
+  const [showAddExpense, setShowAddExpense] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
 
-    useEffect(() => {
-        const fetchExpenses = async () => {
-            try {
-                const response = await axios.get("/api/expenses");
+  useEffect(() => {
+    /**
+     * Fetches the expenses from the API and calculates the total expenses for the current month.
+     *
+     * This function performs the following steps:
+     * 1. Sends a GET request to the `/api/expenses` endpoint to retrieve the expenses.
+     * 2. If the response status is 200, it filters the expenses to include only those from the current month and year.
+     * 3. Calculates the total amount of the filtered expenses and updates the state with this total.
+     * 4. Handles different response statuses (e.g., 401) by setting an appropriate error message.
+     * 5. Catches any errors that occur during the request and sets an error message.
+     * 6. Ensures that the loading state is set to false once the request is complete.
+     *
+     * @async
+     * @function fetchExpenses
+     * @returns {Promise<void>} A promise that resolves when the expenses have been fetched and processed.
+     */
+    const fetchExpenses = async () => {
+      try {
+        const response = await axios.get("/api/expenses");
 
-                if (response.status === 200) {
-                    const fetchedExpenses: Expense[] = response.data.expense;
-                   
-                    console.log(fetchedExpenses);
-                    
-                    const currentMonth = new Date().getMonth();
-                    const currentYear = new Date().getFullYear();
-                    const total = fetchedExpenses
-                        .filter(expense => {
-                            const expenseDate = new Date(expense.date);
-                            return (
-                                expenseDate.getMonth() === currentMonth &&
-                                expenseDate.getFullYear() === currentYear
-                            );
-                        })
-                        .reduce((sum, expense) => sum + expense.amount, 0);
+        if (response.status === 200) {
+          const fetchedExpenses: Expense[] = response.data.expense;
 
-                    setMonthlyTotal(total);
-                } else if (response.status === 401) {
-                    setError(response.data.error);
-                } else {
-                    setError(response.data.error || "Erreur inconnue");
-                }
-            } catch (error) {
-                setError(`Erreur lors de la requête, ${error}`);
-            } finally {
-                setLoading(false);
-            }
-        };
+          console.log(fetchedExpenses);
 
-        fetchExpenses();
-    }, []);
+          const currentMonth = new Date().getMonth();
+          const currentYear = new Date().getFullYear();
+          const total = fetchedExpenses
+            .filter((expense) => {
+              const expenseDate = new Date(expense.date);
+              return (
+                expenseDate.getMonth() === currentMonth &&
+                expenseDate.getFullYear() === currentYear
+              );
+            })
+            .reduce((sum, expense) => sum + expense.amount, 0);
 
+          setMonthlyTotal(total);
+        } else if (response.status === 401) {
+          setError(response.data.error);
+        } else {
+          setError(response.data.error || "Erreur inconnue");
+        }
+      } catch (error) {
+        setError(`Erreur lors de la requête, ${error}`);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    return (
-      <div>
-        {loading ? (
-          <p className="text-text-muted text-center">Chargement...</p>
-        ) : error ? (
-          <p className="text-danger text-center">{error}</p>
-        ) : (
-          <div className="w-full max-w-md p-0 bg-secondary rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6 pb-6 pr-6 pl-6">
-            {/* Titre et icône */}
-            <div className="w-72 p-4 rounded-2xl flex flex-col space-y-2 relative">
-                <div className="absolute -top-6 -left-10 bg-red-400 p-5 rounded-full border-8 border-background">
-                <FaWallet className="text-white text-xl" />
-                </div>
-              
-            </div>
-            <h2 className="text-lg font-bold text-primary">
-                Total des dépenses du mois
-              </h2>
-            {/* Montant total */}
-            <p className="text-3xl font-extrabold text-primary">
-              {monthlyTotal.toFixed(2)} €
-            </p>
+    fetchExpenses();
+  }, []);
 
-            {/* Bouton d'ajout */}
-            <button
-              onClick={() => setShowAddExpense(true)}
-              className="bg-red-400 text-text-light py-3 px-6 rounded-lg hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
-            >
-              Ajouter une dépense
-            </button>
-          </div>
-        )}
+  return (
+    <div className="flex flex-col items-center justify-center py-2">
+      {loading ? (
+        <p className="text-text-muted text-center">Chargement...</p>
+      ) : error ? (
+        <p className="text-danger text-center">{error}</p>
+      ) : (
+        <TotalExpenses
+          monthlyTotal={monthlyTotal}
+          onButton={() => setShowAddExpense(true)}
+          title={"Total des dépenses du mois"}
+          type={"expense"}
+          isButton={true}
+        />
+      )}
 
-        {/* Modale d'ajout */}
-        {showAddExpense && (
-          <AddExpenseModal onClose={() => setShowAddExpense(false)} />
-        )}
-      </div>
-    );
-      
-      
+      {/* Modale d'ajout */}
+      {showAddExpense && (
+        <AddExpenseModal onClose={() => setShowAddExpense(false)} />
+      )}
+    </div>
+  );
 };
 
 export default MonthlyExpenseSummary;

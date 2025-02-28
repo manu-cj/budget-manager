@@ -5,10 +5,10 @@ import { Expense } from "@/app/types/expense";
 import TotalExpenses from "../ui/card/BudgetCard";
 import AddRevenue from "../forms/AddRevenue";
 
-const MonthlyRevenueSummary: React.FC = () => {
+const AnnualRevenue: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
+  const [annualTotal, setAnnualTotal] = useState<number>(0);
   const [showAddRevenue, setShowAddRevenue] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
 
   useEffect(() => {
@@ -21,19 +21,17 @@ const MonthlyRevenueSummary: React.FC = () => {
 
           console.log(fetchedExpenses);
 
-          const currentMonth = new Date().getMonth();
-          const currentYear = new Date().getFullYear();
-          const total = fetchedExpenses
-            .filter((expense) => {
-              const expenseDate = new Date(expense.date);
-              return (
-                expenseDate.getMonth() === currentMonth &&
-                expenseDate.getFullYear() === currentYear
-              );
-            })
-            .reduce((sum, expense) => sum + expense.amount, 0);
+          const twelveMonthsAgo = new Date();
+          twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
 
-          setMonthlyTotal(total);
+          const total = fetchedExpenses
+              .filter((expense) => {
+                  const expenseDate = new Date(expense.date);
+                  return expenseDate >= twelveMonthsAgo;
+              })
+              .reduce((sum, expense) => sum + expense.amount, 0);
+
+          setAnnualTotal(total);
         } else if (response.status === 401) {
           setError(response.data.error);
         } else {
@@ -57,11 +55,11 @@ const MonthlyRevenueSummary: React.FC = () => {
         <p className="text-danger text-center">{error}</p>
       ) : (
         <TotalExpenses
-          monthlyTotal={monthlyTotal}
+          monthlyTotal={annualTotal}
           onButton={() => setShowAddRevenue(true)}
-          title={"Total des revenues du mois"}
+          title={"Total des revenues de l'année"}
           type={"revenue"}
-          isButton={true}
+          isButton={false}
         />
       )}
 
@@ -73,4 +71,4 @@ const MonthlyRevenueSummary: React.FC = () => {
   );
 };
 
-export default MonthlyRevenueSummary;
+export default AnnualRevenue;

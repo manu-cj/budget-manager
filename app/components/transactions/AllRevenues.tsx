@@ -105,7 +105,7 @@ const AllRevenues: React.FC = () => {
       )}
 
       <div
-        className="w-full max-w-full sm:max-w-md h-[500px] overflow-y-scroll bg-white rounded-lg shadow-lg p-4 border border-gray-200"
+        className="w-full max-w-full sm:max-w-md h-[500px] overflow-y-scroll bg-white rounded-lg shadow-lg p-4 border border-gray-200 mx-auto"
         onScroll={handleScroll}
       >
         <ul className="space-y-2">

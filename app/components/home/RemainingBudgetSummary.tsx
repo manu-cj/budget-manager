@@ -102,7 +102,7 @@ const RemainingBudgetSummary: React.FC = () => {
   }, [percentage, circlePercentage, displayPercentage]);
 
   return (
-    <div>
+    <div className="flex flex-col items-center justify-center py-2">
       {loading ? (
         <p className="text-text-muted text-center">Chargement...</p>
       ) : error ? (
