@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 import {
   FaBriefcase,
   FaChartLine,
@@ -48,7 +48,7 @@ const AllRevenues: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.get("/api/revenues-by-page", {
+      const response = await api.get("/api/revenues-by-page", {
         params: { limit, offset },
         withCredentials: true,
       });

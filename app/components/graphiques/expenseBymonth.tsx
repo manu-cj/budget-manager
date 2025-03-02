@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 import { Expense } from "@/app/types/expense";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
@@ -27,7 +27,7 @@ const AnnualExpenseByMonth: React.FC = () => {
     useEffect(() => {
         const fetchExpenses = async () => {
             try {
-                const response = await axios.get("/api/expenses");
+                const response = await api.get("/api/expenses");
 
                 if (response.status === 200) {
                     const fetchedExpenses: Expense[] = response.data.expense;

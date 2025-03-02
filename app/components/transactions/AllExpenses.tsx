@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback, useRef } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 import {
   FaHome,
   FaUtensils,
@@ -65,7 +65,7 @@ const AllExpenses: React.FC = () => {
     setError(null);
 
     try {
-      const response = await axios.get("/api/expenses-by-page", {
+      const response = await api.get("/api/expenses-by-page", {
         params: { limit, offset },
         withCredentials: true,
       });

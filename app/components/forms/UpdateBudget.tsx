@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Budget } from "@/app/types/budget";
-import axios from "axios";
+import api from '@/app/lib/api';
 
 // Mapping des catégories de budget en français
 const categoryTranslations: Record<string, string> = {
@@ -42,7 +42,7 @@ const UpdateBudget: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
 const fetchBudget = async () => {
     try {
-        const response = await axios.get("/api/budget");
+        const response = await api.get("/api/budget");
         if (response.status === 200) {
             const budgetData: Budget = response.data.budget
             setBudget({
@@ -87,7 +87,7 @@ fetchBudget()
     e.preventDefault();
     try {
         console.table(budget)
-      const response = await axios.patch("/api/budget", budget);
+      const response = await api.patch("/api/budget", budget);
       console.log("Budget updated:", response.data);
       window.location.reload();
     } catch (error) {

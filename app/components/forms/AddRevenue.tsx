@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '@/app/lib/api';
 import { Category } from '@/app/types/category';
 
 const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -15,7 +15,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/revenue-categories');
+        const response = await api.get('/api/revenue-categories');
         setCategories(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des catégories :', error);
@@ -29,7 +29,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      await axios.post('/api/revenues', {
+      await api.post('/api/revenues', {
         amount: parseFloat(amount),
         description,
         date,

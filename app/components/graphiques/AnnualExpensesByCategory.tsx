@@ -1,6 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 
 interface Expense {
   category_id: string;
@@ -24,8 +24,8 @@ const AnnualExpensesByCategory: React.FC = () => {
     const fetchData = async () => {
       try {
         const [expensesResponse, categoriesResponse] = await Promise.all([
-          axios.get("/api/expenses"),
-          axios.get("/api/expense-categories")
+          api.get("/api/expenses"),
+          api.get("/api/expense-categories")
         ]);
 
         const fetchedExpenses: Expense[] = expensesResponse.data.expense;

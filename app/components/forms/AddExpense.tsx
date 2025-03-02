@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Category } from '@/app/types/category';
+import api from '@/app/lib/api';
 
 const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
   const [amount, setAmount] = useState<string>('');
@@ -14,7 +14,7 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('/api/expense-categories');
+        const response = await api.get('/api/expense-categories');
         setCategories(response.data);
       } catch (error) {
         console.error('Erreur lors de la récupération des catégories :', error);
@@ -26,21 +26,23 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) =>{
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+  
     try {
       console.log(category_id);
-      
-      await axios.post('/api/expenses', {
+  
+      await api.post('/api/expenses', {
         amount: parseFloat(amount),
         description,
         date,
         category_id,
       });
-      window.location.reload();
+  
+      window.location.reload(); // Rafraîchir la page après l'ajout de la dépense
     } catch (error) {
-      console.error('Erreur lors de l\'ajout de la dépense :', error);
+      console.error("Erreur lors de l'ajout de la dépense :", error);
     }
   };
+  
 
   return (
     <>

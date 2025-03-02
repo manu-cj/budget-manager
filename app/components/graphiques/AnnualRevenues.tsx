@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 import { Expense } from "@/app/types/expense";
 import TotalExpenses from "../ui/card/BudgetCard";
 import AddRevenue from "../forms/AddRevenue";
@@ -14,7 +14,7 @@ const AnnualRevenue: React.FC = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get("/api/revenues");
+        const response = await api.get("/api/revenues");
 
         if (response.status === 200) {
           const fetchedExpenses: Expense[] = response.data.expense;

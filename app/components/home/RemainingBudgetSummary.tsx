@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from '@/app/lib/api';
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { Expense } from "@/app/types/expense";
 import { Budget } from "@/app/types/budget";
@@ -17,7 +17,7 @@ const RemainingBudgetSummary: React.FC = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get("/api/expenses");
+        const response = await api.get("/api/expenses");
 
         if (response.status === 200) {
           const fetchedExpenses: Expense[] = response.data.expense;
@@ -53,7 +53,7 @@ const RemainingBudgetSummary: React.FC = () => {
   useEffect(() => {
     const fetchBudget = async () => {
       try {
-        const response = await axios.get("/api/budget");
+        const response = await api.get("/api/budget");
 
         if (response.status === 200) {
           const fetchedBudget = response.data.budget as Budget;
