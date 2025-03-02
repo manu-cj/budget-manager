@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { NextResponse } from 'next/server';
 
 interface UserPayload {
     id: string;
@@ -21,7 +20,8 @@ export function generateAccessToken(user: UserPayload): string {
   }
   
   // Rafraîchir le token d'accès
-  export function refreshAccessToken(refreshToken: string): NextResponse | null {
+
+  export function refreshAccessToken(refreshToken: string): { newAccessToken: string; email: string } | null {
     try {
       // Vérifier et décoder le refresh token
       const user = jwt.verify(refreshToken, REFRESH_SECRET) as UserPayload;
@@ -30,34 +30,12 @@ export function generateAccessToken(user: UserPayload): string {
       // Générer un nouveau token d'accès
       const newAccessToken = generateAccessToken({ id: user.id, email: user.email });
   
-      // Créer la réponse avec le nouveau token d'accès
-      const response = new NextResponse(
-        JSON.stringify({ email: user.email, message: 'Token régénéré avec succès' }),
-        {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return { newAccessToken, email: user.email }; // Retourner juste le token et l'email
   
-      // Définir le cookie avec le nouveau token d'accès
-      response.cookies.set('token', newAccessToken, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        maxAge: 3600, // 1 heure
-        sameSite: 'strict',
-        path: '/',
-      });
-  
-      return response;
     } catch (error) {
       // En cas d'erreur (token invalide ou expiré), renvoyer une erreur appropriée
       console.error("Erreur lors du rafraîchissement du token :", error);
-      return new NextResponse(
-        JSON.stringify({ error: "Token de rafraîchissement invalide ou expiré" }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+      return null;
     }
   }
+  

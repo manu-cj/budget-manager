@@ -1,59 +1,59 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:3000/",
-  withCredentials: true, // Nécessaire si les tokens sont stockés dans des cookies
+    baseURL: "http://localhost:3000/",
+    withCredentials: true, // Nécessaire si les tokens sont stockés dans des cookies
 });
 
-// Rafraîchir le token si expiré
+// Rafraîchissement du token si expiré
 let isRefreshing = false;
-let failedRequestsQueue: ((newToken: string | null) => void)[] = [];
-
+let failedRequestsQueue: Array<Promise<any>> = [];
 
 api.interceptors.response.use(
-  response => response, // Tout va bien ? On retourne la réponse normalement.
-  async error => {
-    const originalRequest = error.config;
+    response => response, // Tout va bien ? On retourne la réponse normalement.
+    async error => {
+        const originalRequest = error.config;
 
-    // Si erreur 401 et que ce n'était pas une tentative de refresh
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true; // On marque cette requête comme "déjà réessayée"
+        // Si erreur 401 et que ce n'était pas une tentative de refresh
+        if (error.response?.status === 401 && !originalRequest._retry) {
+            originalRequest._retry = true; // On marque cette requête comme "déjà réessayée"
 
-      if (!isRefreshing) {
-        isRefreshing = true;
+            if (!isRefreshing) {
+                isRefreshing = true;
 
-        try {
-          const { data } = await axios.post("http://localhost:3000/api/refresh-token", {}, { withCredentials: true });
-          localStorage.setItem("token", data.accessToken); // Stocker le nouveau token
+                try {
+                    // Tenter de rafraîchir le token
+                    const { data } = await axios.get("http://localhost:3000/api/protected", { withCredentials: true });
 
-          // Réessayer toutes les requêtes qui avaient échoué
-          failedRequestsQueue.forEach(callback => callback(data.accessToken));
-          failedRequestsQueue = [];
-        } catch (refreshError) {
-          console.error("Refresh token invalide, utilisateur déconnecté.");
-          failedRequestsQueue.forEach(callback => callback(null));
-          failedRequestsQueue = [];
-          return Promise.reject(refreshError);
-        } finally {
-          isRefreshing = false;
+                    // Mise à jour des en-têtes avec le nouveau token pour toutes les requêtes échouées
+                    api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
+
+                    // Relancer toutes les requêtes échouées automatiquement
+                    await Promise.all(failedRequestsQueue);
+
+                    // Vider la file d'attente après avoir relancé toutes les requêtes échouées
+                    failedRequestsQueue = [];
+                } catch (refreshError) {
+                    console.error("Refresh token invalide, utilisateur déconnecté.");
+                    failedRequestsQueue = []; // Vider la file d'attente après échec du refresh
+                    return Promise.reject(refreshError); // Propager l'erreur
+                } finally {
+                    isRefreshing = false;
+                }
+            }
+
+            // Ajouter la requête échouée à la file d'attente et la relancer lorsque le refresh est terminé
+            return new Promise((resolve, reject) => {
+                failedRequestsQueue.push(
+                    api(originalRequest)
+                        .then(resolve)
+                        .catch(reject)
+                );
+            });
         }
-      }
 
-      // Attendre que le refresh soit terminé avant de renvoyer la requête
-      return new Promise(resolve => {
-        failedRequestsQueue.push((newToken: string | null) => {
-          if (newToken) {
-            originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-            resolve(api(originalRequest)); // On renvoie la requête avec le nouveau token
-          } else {
-            resolve(Promise.reject(error)); // Si pas de token, on rejette
-          }
-        });
-      });
+        return Promise.reject(error); // Retourner l'erreur si ce n'est pas une erreur 401
     }
-
-    return Promise.reject(error);
-  }
 );
 
 export default api;

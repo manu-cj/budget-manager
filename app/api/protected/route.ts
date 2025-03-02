@@ -13,10 +13,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
 
     if (refreshToken) {
-        const refreshedResponse = refreshAccessToken(refreshToken);
+        // Rafraîchir le token avec le refreshToken
+        const refreshedResponse = await refreshAccessToken(refreshToken);
 
         if (refreshedResponse) {
-            return refreshedResponse;
+            // Mettre à jour le cookie avec le nouveau token
+            const response = NextResponse.json({ message: 'Token refreshed', token: refreshedResponse.newAccessToken });
+            response.headers.set('Set-Cookie', `token=${refreshedResponse.newAccessToken}; HttpOnly; Secure; Max-Age=3600; SameSite=Strict; Path=/`);
+            return response;
         }
     }
 
