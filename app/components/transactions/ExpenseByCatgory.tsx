@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { useEffect, useState } from "react";
 import api from '@/app/lib/api';
 
@@ -12,6 +12,21 @@ interface Category {
   id: string;
   name: string;
 }
+
+const COLORS = [
+    "#0088FE",
+    "#00C49F",
+    "#FFBB28",
+    "#FF8042",
+    "#AF19FF",
+    "#FF1919",
+    "#19FFB1",
+    "#FF19E7",
+    "#19FF19",
+    "#1919FF",
+    "#FF19A6",
+    "#FF1919",
+  ]  
 
 
 const ExpensesByCategory: React.FC = () => {
@@ -74,6 +89,7 @@ const ExpensesByCategory: React.FC = () => {
       ) : error ? (
         <p className="text-danger text-center">{error}</p>
       ) : (
+        <div>
         <ResponsiveContainer width="100%" height={200}>
           <BarChart data={chartData}>
             <XAxis dataKey="name" />
@@ -81,11 +97,28 @@ const ExpensesByCategory: React.FC = () => {
             <Tooltip />
             <Bar 
               dataKey="value" 
-              fill="#f87171"
-              barSize={50}
-            />
+              barSize={50} // Augmente la taille de la barre
+            >
+              {chartData.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Bar>
           </BarChart>
         </ResponsiveContainer>
+        <div className="mt-4">
+          <ul className="flex flex-col">
+            {categories.map((category, index) => (
+              <li key={category.id} className="flex items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2 px-2">
+            <span 
+              className="inline-block w-3 h-3 mr-2 rounded-full" 
+              style={{ backgroundColor: COLORS[index % COLORS.length] }}
+            ></span>
+            <span className="text-sm sm:text-base md:text-lg font-medium">{category.name} : {expensesByCategory[category.id] || 0} €</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        </div>
       )}
     </div>
   );

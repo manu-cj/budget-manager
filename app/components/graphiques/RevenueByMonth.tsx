@@ -83,6 +83,7 @@ const AnnualRevenueByMonth: React.FC = () => {
             ) : error ? (
                 <p className="text-center text-red-500">{error}</p>
             ) : (
+                <div>
                 <ResponsiveContainer width="100%" height={200}>
                     <BarChart data={chartData}>
                         <XAxis dataKey="name" />
@@ -91,6 +92,15 @@ const AnnualRevenueByMonth: React.FC = () => {
                         <Bar dataKey="Dépenses" fill="#38b044" />
                     </BarChart>
                 </ResponsiveContainer>
+                <div className="mt-4">
+                    {chartData.map((data, index) => (
+                        <div key={index} className="flex justify-between">
+                            <span>{data.name}</span>
+                            <span>{data.Dépenses.toFixed(2)} €</span>
+                        </div>
+                    ))}
+                </div>
+                </div>
             )}
         </div>
     );
