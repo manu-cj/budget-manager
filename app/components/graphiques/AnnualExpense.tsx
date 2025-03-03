@@ -55,13 +55,22 @@ const AnnualExpense: React.FC = () => {
             ) : error ? (
             <p className="text-danger text-center">{error}</p>
             ) : (
+                <div className="flex flex-col items-center gap-8">
             <TotalExpenses
                 monthlyTotal={annualTotal}
                 onButton={() => setShowAddExpense(true)}
-                title={"Total des dépenses de l'année"}
+                title={"Total des dépenses des 12 derniers mois"}
                 type={"expense"}
                 isButton={false}
             />
+            <TotalExpenses
+                monthlyTotal={annualTotal / 12}
+                onButton={() => setShowAddExpense(true)}
+                title={"Moyenne des dépenses des 12 derniers mois"}
+                type={"expense"}
+                isButton={false}
+            />
+            </div>
             )}
 
             {showAddExpense && (
