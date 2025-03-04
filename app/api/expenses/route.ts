@@ -123,8 +123,7 @@ export async function DELETE(request: Request) {
 
     console.log("data : " + data.transactionId);
     
-    // Call function to delete expense here
-    await deleteExpense(data.transactionId, userId)
+    await deleteExpense(data.transactionId, userId);
 
     return NextResponse.json({ message: `Dépense supprimé avec succès.` });
 

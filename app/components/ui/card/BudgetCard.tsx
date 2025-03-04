@@ -10,7 +10,7 @@ interface TotalExpensesProps {
 
 const TotalExpenses: React.FC<TotalExpensesProps> = ({ monthlyTotal, onButton, title, type, isButton }) => {
   return (
-    <div className={`w-full max-w-md p-0 ${type === 'expense' ? 'bg-red-200' : 'bg-green-100'} rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6 pb-6 pr-6 pl-6`}>
+    <div className={`w-full max-w-md p-0 ${type === 'expense' ? 'bg-orange-200' : 'bg-green-100'} rounded-2xl shadow-lg border border-secondary-dark flex flex-col items-center space-y-6 pb-6 pr-6 pl-6`}>
       {/* Titre et icône */}
       <div className="w-72 p-4 rounded-2xl flex flex-col space-y-2 relative">
         <div className={`absolute -top-6 -left-10 p-5 rounded-full border-8 border-background ${type === 'expense' ? 'bg-red-400' : 'bg-green-600'}`}>
