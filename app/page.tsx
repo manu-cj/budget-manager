@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"; // Animation
 import axios from "axios";
 import Auth from "./components/auth/Auth";
 import HomePage from "./components/home/HomePage";
-import Budget from "./components/transactions/Budget";
+import Budget from "./components/graphiques/Budget";
 import GraphiquePage from "./components/graphiques/GraphiquePage";
 
 export default function ProtectedPage() {
@@ -139,11 +139,7 @@ export default function ProtectedPage() {
           </div>
 
           {/* Affichage des erreurs */}
-          {error && (
-            <p className="text-center text-danger mt-4">
-              {error}
-            </p>
-          )}
+          {error && <p className="text-center text-danger mt-4">{error}</p>}
         </div>
       ) : (
         <Auth />

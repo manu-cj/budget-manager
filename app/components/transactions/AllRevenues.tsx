@@ -9,6 +9,7 @@ import {
   FaMoneyBillWave,
   FaQuestionCircle,
   FaCube,
+  FaTrash,
 } from "react-icons/fa";
 
 type Expense = {
@@ -111,27 +112,32 @@ const AllRevenues: React.FC = () => {
         <ul className="space-y-2">
           {expenses.map((expense, index) => (
             <li
-              key={`${expense.id}-${index}`}
-              className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200"
+            key={`${expense.id}-${index}`}
+            className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200 relative group"
+          >
+            <div className="flex items-center space-x-4">
+            {getIconByCategory(expense.category_id)}
+            </div>
+            <div className="flex-grow max-w-[65%]">
+            <p className="text-sm font-bold text-gray-800">
+              {expense.description}
+            </p>
+            <p className="text-xs text-gray-500">
+              {new Date(expense.date).toLocaleDateString("fr-FR")}
+            </p>
+            </div>
+            <div className="flex items-center space-x-4">
+            <p className="text-lg font-semibold text-orange-600 group-hover:mr-8 transition-all duration-200">
+              {expense.amount.toFixed(2)} €
+            </p>
+            <button
+              className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute right-2"
+              onClick={() => handleDelete(expense.id)}
             >
-              <div className="flex items-center space-x-4">
-                {getIconByCategory(expense.category_id)}
-                <div className="flex-grow max-w-[65%]">
-                  <p className="text-sm font-bold text-gray-800">
-                    {expense.description}
-                  </p>
-
-                  <p className="text-xs text-gray-500">
-                    {new Date(expense.date).toLocaleDateString("fr-FR")}
-                  </p>
-                </div>
-              </div>
-              <div className="flex flex-col items-end">
-                <p className="text-lg font-semibold text-green-600">
-                  {expense.amount.toFixed(2)} €
-                </p>
-              </div>
-            </li>
+              <FaTrash></FaTrash>
+            </button>
+            </div>
+          </li>
           ))}
         </ul>
         {!hasMore && (

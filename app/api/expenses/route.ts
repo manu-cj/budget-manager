@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { Expense } from '@/app/types/expense';
-import { createExpense, getExpenses  } from '@/app/controllers/expenseController';
+import { createExpense, deleteExpense, getExpenses  } from '@/app/controllers/expenseController';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
@@ -88,6 +88,47 @@ export async function GET(request: Request) {
 
   } catch (error) {
     console.error('Erreur lors de la récupération des dépenses :', error);
+    return new NextResponse(JSON.stringify({ error: "Erreur interne du serveur" }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+}
+
+export async function DELETE(request: Request) {
+  try {
+    const cookies = request.headers.get('cookie');
+    const token = cookies?.split(';').find(cookie => cookie.trim().startsWith('token='))
+      ?.split('=')[1];
+
+    if (!token) {
+      return new NextResponse(JSON.stringify({ error: "Token manquant" }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    let decoded;
+    try {
+      decoded = jwt.verify(token, JWT_SECRET) as { id: string, email: string };
+    } catch (error) {
+      return new NextResponse(JSON.stringify({ error: `Token invalide ou expiré, ${error}` }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const expenseId = await request.json();
+    const userId = decoded.id;
+    console.log(expenseId);
+    
+    // Call function to delete expense here
+    await deleteExpense(expenseId.expenseId, userId)
+
+    return NextResponse.json({ message: `Dépense supprimé avec succès.` });
+
+  } catch (error) {
+    console.error('Erreur lors de la suppression de la dépense :', error);
     return new NextResponse(JSON.stringify({ error: "Erreur interne du serveur" }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

@@ -47,3 +47,16 @@ export const getExpensesByOffset = async (
     throw error;
   }
 };
+
+export const deleteExpense = async (expenseId: string, userId: string): Promise<void> => {
+  try {
+    console.log("expenseId : " + expenseId +" userId : "+ userId);
+    
+    db.prepare(`
+      DELETE FROM expenses WHERE id = ? AND user_id = ?
+    `).run(expenseId, userId);
+  } catch (error) {
+    console.error('Erreur lors de la suppression de la dépense :', error);
+    throw error;
+  }
+};
