@@ -7,7 +7,7 @@ const DeleteTransaction: React.FC<{ onClose: () => void; transactionId: string; 
     const handleDelete = async () => {
         try {
              await api.delete(`/api/${route}`, {
-                data: { expenseId : transactionId },
+                data: { transactionId : transactionId },
                 withCredentials: true,
               });
             window.location.reload();
@@ -20,7 +20,7 @@ const DeleteTransaction: React.FC<{ onClose: () => void; transactionId: string; 
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 p-4">
             <div className="bg-white rounded-lg shadow-xl p-6 w-3/4  max-w-none overflow-y-auto relative flex flex-col">
             <h2 className="text-2xl font-semibold mb-4 text-gray-700">Supprimer la dépense</h2>
-            <p className="mb-4 text-gray-700">Êtes-vous sûr de vouloir supprimer cette dépense ? Cette action est irréversible.</p>
+            <p className="mb-4 text-gray-700">Êtes-vous sûr de vouloir supprimer cette transaction ? Cette action est irréversible.</p>
             <div className="mb-4 p-4 border rounded-lg bg-gray-100">
                 <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
                 <p className="text-gray-600">Montant: {price} €</p>

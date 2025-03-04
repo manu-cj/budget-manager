@@ -11,6 +11,8 @@ import {
   FaCube,
   FaTrash,
 } from "react-icons/fa";
+import DeleteTransaction from "../forms/DeleteTransaction";
+
 
 type Expense = {
   id: number;
@@ -27,6 +29,10 @@ const AllRevenues: React.FC = () => {
   const [limit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [showDeleteTransaction, setShowDeleteTransaction] = useState<boolean>(false);
+  const [transactionId, setTransactionId] = useState<string>('');
+  const [transactionTitle, setTransactionTitle] = useState<string>('');
+  const [transactionPrice, setTransactionPrice] = useState<string>('');
   const loadedIds = useRef(new Set<number>());
 
   const categoryIcons: Record<string, JSX.Element> = {
@@ -132,7 +138,12 @@ const AllRevenues: React.FC = () => {
             </p>
             <button
               className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute right-2"
-              onClick={() => handleDelete(expense.id)}
+              onClick={() => {
+                setShowDeleteTransaction(true);
+                setTransactionId(expense.id.toString());
+                setTransactionTitle(expense.description);
+                setTransactionPrice(expense.amount.toFixed(2));
+              }}
             >
               <FaTrash></FaTrash>
             </button>
@@ -144,6 +155,9 @@ const AllRevenues: React.FC = () => {
           <p className="text-center text-gray-500 mt-4">
             Toutes les données ont été chargées.
           </p>
+        )}
+        {showDeleteTransaction && (
+          <DeleteTransaction onClose={() => setShowDeleteTransaction(false)} transactionId={transactionId} route="revenues" title={transactionTitle} price={transactionPrice} />
         )}
         {loading && (
           <p className="text-center text-gray-500 mt-4">Chargement...</p>

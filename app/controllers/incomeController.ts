@@ -45,3 +45,14 @@ export const getRevenuesByOffset = async (
     throw error;
   }
 };
+
+export const deleteRevenue = async (revenueId: string, userId: string): Promise<void> => {
+  try {
+    db.prepare(`
+      DELETE FROM revenues WHERE id = ? AND user_id = ?
+    `).run(revenueId, userId);
+  } catch (error) {
+    console.error('Erreur lors de la suppression de la dépense :', error);
+    throw error;
+  }
+};
