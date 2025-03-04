@@ -17,7 +17,9 @@ import {
   FaGift,
   FaQuestionCircle,
   FaPlane,
+  FaTrash
 } from "react-icons/fa";
+import DeleteTransaction from "../forms/DeleteTransaction";
 
 type Expense = {
   id: number;
@@ -34,6 +36,10 @@ const AllExpenses: React.FC = () => {
   const [limit] = useState<number>(10);
   const [offset, setOffset] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [showDeleteExpense, setShowDeleteExpense] = useState<boolean>(false);
+  const [transactionId, setTransactionId] = useState<string>('');
+  const [transactionTitle, setTransactionTitle] = useState<string>('');
+  const [transactionPrice, setTransactionPrice] = useState<string>('');
   const loadedIds = useRef(new Set<number>());
 
   const categoryIcons: Record<number, JSX.Element> = {
@@ -113,6 +119,8 @@ const AllExpenses: React.FC = () => {
     [loading, hasMore, fetchExpenses]
   );
 
+  
+
   return (
     <>
       {error && (
@@ -129,24 +137,34 @@ const AllExpenses: React.FC = () => {
           {expenses.map((expense, index) => (
             <li
               key={`${expense.id}-${index}`}
-              className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200"
+              className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200 relative group"
             >
               <div className="flex items-center space-x-4">
-                {getIconByCategory(expense.category_id)}
-                <div className="flex-grow max-w-[65%]">
-                  <p className="text-sm font-bold text-gray-800">
-                    {expense.description}
-                  </p>
-
-                  <p className="text-xs text-gray-500">
-                    {new Date(expense.date).toLocaleDateString("fr-FR")}
-                  </p>
-                </div>
+              {getIconByCategory(expense.category_id)}
               </div>
-              <div className="flex flex-col items-end">
-                <p className="text-lg font-semibold text-orange-600">
-                  {expense.amount.toFixed(2)} €
-                </p>
+              <div className="flex-grow max-w-[65%]">
+              <p className="text-sm font-bold text-gray-800">
+                {expense.description}
+              </p>
+              <p className="text-xs text-gray-500">
+                {new Date(expense.date).toLocaleDateString("fr-FR")}
+              </p>
+              </div>
+              <div className="flex items-center space-x-4">
+              <p className="text-lg font-semibold text-orange-600 group-hover:mr-8 transition-all duration-200">
+                {expense.amount.toFixed(2)} €
+              </p>
+                <button
+                className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute right-2"
+                onClick={() => {
+                  setShowDeleteExpense(true);
+                  setTransactionId(expense.id.toString());
+                  setTransactionTitle(expense.description);
+                  setTransactionPrice(expense.amount.toFixed(2));
+                }}
+                >
+                <FaTrash />
+                </button>
               </div>
             </li>
           ))}
@@ -156,9 +174,13 @@ const AllExpenses: React.FC = () => {
             Toutes les données ont été chargées.
           </p>
         )}
+        {showDeleteExpense && (
+          <DeleteTransaction onClose={() => setShowDeleteExpense(false)} transactionId={transactionId} route="expenses" title={transactionTitle} price={transactionPrice} />
+        )}
         {loading && (
           <p className="text-center text-gray-500 mt-4">Chargement...</p>
         )}
+        
       </div>
     </>
   );

@@ -9,10 +9,10 @@ const AnnualRevenue: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [annualTotal, setAnnualTotal] = useState<number>(0);
-  const [showAddRevenue, setShowAddRevenue] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
+  const [showAddRevenue, setShowAddRevenue] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchExpenses = async () => {
+    const fetchRevenues = async () => {
       try {
         const response = await api.get("/api/revenues");
 
@@ -44,7 +44,7 @@ const AnnualRevenue: React.FC = () => {
       }
     };
 
-    fetchExpenses();
+    fetchRevenues();
   }, []);
 
   return (
