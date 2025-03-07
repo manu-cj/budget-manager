@@ -63,7 +63,7 @@ export const authenticateUser = async (email: string, password: string): Promise
   export async function getUserByEmail(email: string): Promise<User | null> {
     try {
         const user = db.prepare(`
-            SELECT id, email
+            SELECT id, email, username
             FROM users
             WHERE email = ?
         `).get(email);
@@ -73,4 +73,14 @@ export const authenticateUser = async (email: string, password: string): Promise
         console.error('Erreur lors de la récupération des informations utilisateur :', error);
         throw new Error("Erreur lors de la récupération des informations utilisateur");
     }
+}
+
+
+export async function changePassword(email: string, newPassword: string): Promise<void> {
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+    db.prepare(`
+        UPDATE users
+        SET password = ?
+        WHERE email = ?
+    `).run(hashedPassword, email);
 }

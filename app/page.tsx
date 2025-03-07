@@ -7,11 +7,13 @@ import Auth from "./components/auth/Auth";
 import HomePage from "./components/home/HomePage";
 import Budget from "./components/graphiques/Budget";
 import GraphiquePage from "./components/graphiques/GraphiquePage";
+import Header from "./components/shared/header";
 
 export default function ProtectedPage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isLogin, setIsLogin] = useState<boolean>(false);
+  const [user, setUser] = useState<{ id: string; username: string; email: string }>({ id: "", username: "", email: "" });
   const [page, setPage] = useState<string>("home");
   const [direction, setDirection] = useState<number>(0); // Direction pour l'animation
 
@@ -52,6 +54,8 @@ export default function ProtectedPage() {
 
         if (response.status === 200) {
           setIsLogin(true);
+          setUser(response.data);
+          
         } else if (response.status === 401) {
           setError(response.data.error);
         } else {
@@ -69,6 +73,7 @@ export default function ProtectedPage() {
 
   return (
     <>
+    <Header username={user.username} />
       {loading ? (
         <p className="text-text-muted text-center">Chargement...</p>
       ) : isLogin ? (
@@ -77,7 +82,7 @@ export default function ProtectedPage() {
           className="flex flex-col min-h-screen bg-background text-primary"
         >
           {/* Barre de navigation */}
-          <div className="flex justify-center items-center mt-8 w-full">
+          <div className="flex justify-center items-center  w-full">
             <ul className="flex space-x-4 bg-secondary rounded-lg shadow-md px-8 py-2">
               <li>
                 <h2

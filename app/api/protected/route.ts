@@ -9,12 +9,14 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const user = verifyAccessToken(token);
 
     if (user) {
-        return NextResponse.json({ email: user.email, message: `Bienvenue, ${user.email}!` });
+        console.log(" user : ", user);
+        
+        return NextResponse.json({ email: user.email, username: user.username, message: `Bienvenue, ${user.username}!` });
     }
 
     if (refreshToken) {
         // Rafraîchir le token avec le refreshToken
-        const refreshedResponse = await refreshAccessToken(refreshToken);
+        const refreshedResponse =  refreshAccessToken(refreshToken);
 
         if (refreshedResponse) {
             // Mettre à jour le cookie avec le nouveau token
