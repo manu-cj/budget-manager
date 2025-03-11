@@ -53,7 +53,7 @@ const Profile: React.FC<ProfileProps> = ({ show, handleClose, user }) => {
   return (
     <>
       {show && (
-        <div className="fixed inset-0 flex items-center justify-center z-50">
+        <div className="fixed inset-0 flex items-center justify-center z-50 p-2">
           <div
             className="fixed inset-0 bg-black opacity-50"
             onClick={handleClose}
@@ -106,7 +106,7 @@ const Profile: React.FC<ProfileProps> = ({ show, handleClose, user }) => {
                     />
                     {error && <p className="text-red-500">{error}</p>}
                     <button
-                      className="w-full bg-blue-600 text-black py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
+                      className="w-full bg-blue-500 text-black py-2 px-4 rounded-md hover:bg-blue-700 transition-colors duration-300"
                       onClick={handlePasswordChange}
                     >
                       Changer le mot de passe
