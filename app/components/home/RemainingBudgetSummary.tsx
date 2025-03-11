@@ -1,82 +1,22 @@
 import { useEffect, useState } from "react";
-import api from '@/app/lib/api';
 import { FaMoneyBillAlt } from "react-icons/fa";
-import { Expense } from "@/app/types/expense";
-import { Budget } from "@/app/types/budget";
+
 import UpdateBudget from "../forms/UpdateBudget";
 
-const RemainingBudgetSummary: React.FC = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [monthlyTotal, setMonthlyTotal] = useState<number>(0);
-  const [totalBudget, setTotalBudget] = useState<number>(0);
+interface BudgetProps {
+  error : string | null;
+  loading : boolean;
+  monthlyTotal : number;
+  totalBudget : number;
+}
+
+const RemainingBudgetSummary: React.FC<BudgetProps> = ({error, loading, monthlyTotal, totalBudget}) => {
+
   const [showUpdateBudget, setShowUpdateBudget] = useState<boolean>(false);
   const [circlePercentage, setCirclePercentage] = useState<number>(100);
   const [displayPercentage, setDisplayPercentage] = useState<number>(100); // Nouveau state
 
-  useEffect(() => {
-    const fetchExpenses = async () => {
-      try {
-        const response = await api.get("/api/expenses");
 
-        if (response.status === 200) {
-          const fetchedExpenses: Expense[] = response.data.expense;
-
-          const currentMonth = new Date().getMonth();
-          const currentYear = new Date().getFullYear();
-          const total = fetchedExpenses
-            .filter((expense) => {
-              const expenseDate = new Date(expense.date);
-              return (
-                expenseDate.getMonth() === currentMonth &&
-                expenseDate.getFullYear() === currentYear
-              );
-            })
-            .reduce((sum, expense) => sum + expense.amount, 0);
-
-          setMonthlyTotal(total);
-        } else if (response.status === 401) {
-          setError(response.data.error);
-        } else {
-          setError(response.data.error || "Erreur inconnue");
-        }
-      } catch (error) {
-        setError(`Erreur lors de la requête, ${error}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchExpenses();
-  }, [monthlyTotal]);
-
-  useEffect(() => {
-    const fetchBudget = async () => {
-      try {
-        const response = await api.get("/api/budget");
-
-        if (response.status === 200) {
-          const fetchedBudget = response.data.budget as Budget;
-
-          const total = Object.entries(fetchedBudget)
-            .filter(([key]) => key !== "updated_at")
-            .reduce((acc, [, value]) => acc + value, 0);
-
-          setTotalBudget(total);
-        } else if (response.status === 401) {
-          setError(response.data.error);
-        } else {
-          setError(response.data.error || "Erreur inconnue");
-        }
-      } catch (error) {
-        setError(`Erreur lors de la requête, ${error}`);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBudget();
-  }, [monthlyTotal]);
 
   const remainingBudget = totalBudget - monthlyTotal;
   const percentage = (remainingBudget / totalBudget) * 100;

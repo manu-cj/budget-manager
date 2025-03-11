@@ -20,11 +20,13 @@ export async function POST(request: Request) {
             if (!user || !user.id) {
                 throw new Error("Utilisateur introuvable.");
             }
+            console.log("user : ", user);
+            
             // Générer le token d'accès
-            const token = jwt.sign({ id: user.id, email: user.email }, JWT_SECRET, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, email: user.email, username: user.username}, JWT_SECRET, { expiresIn: '1h' });
 
             // Générer le refresh token
-            const refreshToken = jwt.sign({  id: user.id, email: user.email }, REFRESH_SECRET, { expiresIn: '14d' });
+            const refreshToken = jwt.sign({  id: user.id, email: user.email, username: user.username  }, REFRESH_SECRET, { expiresIn: '14d' });
 
             const response = new NextResponse(JSON.stringify({ message: "Authentification réussie" }), {
                 status: 200,
