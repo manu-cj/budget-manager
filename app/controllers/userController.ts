@@ -76,11 +76,31 @@ export const authenticateUser = async (email: string, password: string): Promise
 }
 
 
-export async function changePassword(email: string, newPassword: string): Promise<void> {
+export async function changePassword(id: string, newPassword: string): Promise<void> {
     const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
     db.prepare(`
         UPDATE users
         SET password = ?
-        WHERE email = ?
-    `).run(hashedPassword, email);
+        WHERE id = ?
+    `).run(hashedPassword, id);
+}
+
+export async function verifyPassword(id: string, password: string): Promise<boolean> {
+  try {
+    const user = db.prepare(`
+      SELECT password
+      FROM users
+      WHERE id = ?
+    `).get(id) as User;
+
+    if (!user) {
+      return false;
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    return isMatch;
+  } catch (error) {
+    console.error('Erreur lors de la vérification du mot de passe :', error);
+    throw new Error("Erreur lors de la vérification du mot de passe");
+  }
 }

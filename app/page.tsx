@@ -73,7 +73,7 @@ export default function ProtectedPage() {
 
   return (
     <>
-    <Header username={user.username} />
+    <Header user={user} />
       {loading ? (
         <p className="text-text-muted text-center">Chargement...</p>
       ) : isLogin ? (
