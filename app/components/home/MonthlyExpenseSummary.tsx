@@ -15,7 +15,7 @@ interface ExpenseProps {
 const MonthlyExpenseSummary: React.FC<ExpenseProps> = ( {error, loading, monthlyTotal}) => {
   const [showAddExpense, setShowAddExpense] = useState<boolean>(false); // État pour afficher/cacher UpdateBudget
 
-
+  
   return (
     <div className="flex flex-col items-center justify-center py-2">
       {loading ? (
