@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         primary: {
           DEFAULT: "#1C1C1E", // Noir profond pour les éléments clés
-          light: "#2C2C2E", // Gris anthracite pour les fonds sombres
+            light: "#FFFFFF", // Blanc pur pour les fonds sombres
           dark: "#000000", // Noir pur pour le contraste maximal
         },
         secondary: {
@@ -36,7 +36,7 @@ const config: Config = {
         },
         text: {
           DEFAULT: "#E5E5E5", // Noir profond pour les textes principaux
-          light: "#F5F5F5", // Blanc cassé pour les textes sur fonds sombres
+            light: "#2C2C2E", // Gris foncé pour les textes sur fonds sombres
           muted: "#8E8E93", // Gris doux pour les sous-titres ou textes secondaires
         },
         background: {

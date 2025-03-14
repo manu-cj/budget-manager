@@ -15,7 +15,7 @@ const Auth: React.FC = () => {
         <div className="flex flex-col items-center justify-center min-h-screen bg-background">
           <div className="w-2/5 max-w-md p-8 space-y-6 rounded-lg shadow-lg bg-primary-light text-center">
             {/* Titre */}
-            <h1 className="text-4xl font-bold text-text-light">
+            <h1 className="text-4xl font-bold text-accent">
               {isLogin ? "Se connecter" : "Créer un compte"}
             </h1>
       

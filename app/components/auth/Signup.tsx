@@ -56,18 +56,15 @@ const Signup: React.FC = () => {
   return (
     <div className="flex items-center justify-center bg-primary">
       <div className="w-full max-w-md p-8 space-y-6 bg-primary-light ">
-        <h2 className="text-2xl font-bold text-center text-text-light">
-          Sign Up
-        </h2>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Prénom et nom */}
           <div className="flex space-x-4">
             <div className="w-1/2">
               <label
                 htmlFor="first_name"
-                className="block text-sm font-medium text-secondary-dark"
+                className="block text-sm font-medium text-text-light"
               >
-                First Name
+                Prénom
               </label>
               <input
                 type="text"
@@ -82,9 +79,9 @@ const Signup: React.FC = () => {
             <div className="w-1/2">
               <label
                 htmlFor="last_name"
-                className="block text-sm font-medium text-secondary-dark"
+                className="block text-sm font-medium text-text-light"
               >
-                Last Name
+                Nom
               </label>
               <input
                 type="text"
@@ -102,9 +99,9 @@ const Signup: React.FC = () => {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-secondary-dark"
+              className="block text-sm font-medium text-text-light"
             >
-              Username
+              Nom d&apos;utilisateur
             </label>
             <input
               type="text"
@@ -121,7 +118,7 @@ const Signup: React.FC = () => {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-secondary-dark"
+              className="block text-sm font-medium text-text-light"
             >
               Email
             </label>
@@ -137,13 +134,13 @@ const Signup: React.FC = () => {
           </div>
   
           {/* Mot de passe */}
-          <div className="flex space-x-4">
-            <div className="w-1/2">
+          
+            <div className="w-full">
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-secondary-dark"
+                className="block text-sm font-medium text-text-light"
               >
-                Password
+                Mot de passe
               </label>
               <input
                 type="password"
@@ -155,12 +152,12 @@ const Signup: React.FC = () => {
                 placeholder="Password"
               />
             </div>
-            <div className="w-1/2">
+            <div className="w-full">
               <label
                 htmlFor="passwordRepeat"
-                className="block text-sm font-medium text-secondary-dark"
+                className="block text-sm font-medium text-text-light"
               >
-                Repeat Password
+                Répéter le mot de passe
               </label>
               <input
                 type="password"
@@ -172,7 +169,7 @@ const Signup: React.FC = () => {
                 placeholder="Repeat password"
               />
             </div>
-          </div>
+         
   
           {/* Bouton */}
           <button
@@ -181,9 +178,13 @@ const Signup: React.FC = () => {
           >
             Sign Up
           </button>
+          
         </form>
+        
       </div>
+      
     </div>
+    
   );  
   
 };

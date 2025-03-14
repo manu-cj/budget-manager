@@ -19,6 +19,7 @@ const HomePage: React.FC = () => {
     const [errorBudget, setErrorBudget] = useState<string | null>(null);
     const [loadingBudget, setLoadingBudget] = useState<boolean>(true);
     const [totalBudget, setTotalBudget] = useState<number>(0);
+
   
     useEffect(() => {
       const fetchRevenue = async () => {
@@ -146,6 +147,9 @@ const HomePage: React.FC = () => {
             <RemainingBudgetSummary error={errorBudget} loading={loadingBudget} monthlyTotal={monthlyTotalExpense} totalBudget={totalBudget} />
             <MonthlyExpenseSummary error={errorExpense} loading={loadingExpense} monthlyTotal={monthlyTotalExpense} />
             <MonthlyRevenueSummary error={errorRevenue} loading={loadingRevenue} monthlyTotal={monthlyTotalRevenue} />
+            
+
+            
         </div>
         </>
     )
