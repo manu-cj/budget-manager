@@ -16,6 +16,9 @@ export default function ProtectedPage() {
   const [user, setUser] = useState<{ id: string; username: string; email: string }>({ id: "", username: "", email: "" });
   const [page, setPage] = useState<string>("home");
   const [direction, setDirection] = useState<number>(0); // Direction pour l'animation
+  const [showCookieMessage, setShowCookieMessage] = useState<boolean>(true);
+
+  
 
   const renderPage = (page: string) => {
     switch (page) {
@@ -70,10 +73,12 @@ export default function ProtectedPage() {
 
     checkLogin();
   }, []);
-
+  console.log(user);
+  
   return (
     <>
-    <Header user={user} />
+    {user.id !== ""  && <Header user={user} />}
+    
       {loading ? (
         <p className="text-text-muted text-center">Chargement...</p>
       ) : isLogin ? (
@@ -82,7 +87,7 @@ export default function ProtectedPage() {
           className="flex flex-col min-h-screen bg-background text-primary"
         >
           {/* Barre de navigation */}
-          <div className="flex justify-center items-center  w-full">
+          <div className="flex justify-center i</div>tems-center  w-full">
             <ul className="flex space-x-4 bg-secondary rounded-lg shadow-md px-8 py-2">
               <li>
                 <h2
@@ -141,7 +146,19 @@ export default function ProtectedPage() {
                 {renderPage(page)}
               </motion.div>
             </AnimatePresence>
+            {showCookieMessage && (
+              <div className="w-full fixed bottom-0 left-0 right-0 p-4 bg-gray-800 text-white text-center">
+                <p>Nous utilisons des cookies pour améliorer votre expérience sur notre site. En continuant à naviguer, vous acceptez notre utilisation des cookies.</p>
+                <button
+                  className="mt-2 px-4 py-2 bg-red-500 text-white rounded"
+                  onClick={() => setShowCookieMessage(false)}
+                >
+                  J&apos;ai compris
+                </button>
+              </div>
+            )}
           </div>
+
 
           {/* Affichage des erreurs */}
           {error && <p className="text-center text-danger mt-4">{error}</p>}
