@@ -24,6 +24,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const currentYear = new Date().getFullYear();
   return (
     <html lang="en">
       <body
@@ -31,6 +32,9 @@ export default function RootLayout({
       >
        
         {children}
+        <footer className="bg-gray-800 text-white p-4 text-center">
+                <p>&copy; {currentYear} Lubu</p>
+            </footer>
       </body>
     </html>
   );

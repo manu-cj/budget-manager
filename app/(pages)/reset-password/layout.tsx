@@ -1,11 +1,11 @@
 import React, { ReactNode } from 'react';
 import Link from 'next/link';
 
-interface ForgotPasswordLayoutProps {
+interface ResetPasswordLayoutProps {
     children: ReactNode;
 }
 
-const ForgotPasswordLayout: React.FC<ForgotPasswordLayoutProps> = ({ children }) => {
+const ResetPasswordLayout: React.FC<ResetPasswordLayoutProps> = ({ children }) => {
     const currentYear = new Date().getFullYear();
 
     return (
@@ -15,7 +15,7 @@ const ForgotPasswordLayout: React.FC<ForgotPasswordLayoutProps> = ({ children })
                     Lubu
                 </Link>
             </header>
-            <main className="flex-grow ">
+            <main className="flex-grow">
                 {children}
             </main>
             <footer className="bg-gray-800 text-white p-4 text-center">
@@ -25,4 +25,4 @@ const ForgotPasswordLayout: React.FC<ForgotPasswordLayoutProps> = ({ children })
     );
 };
 
-export default ForgotPasswordLayout;
+export default ResetPasswordLayout;
