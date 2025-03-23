@@ -170,8 +170,6 @@ const Signup: React.FC = () => {
               />
             </div>
          
-  
-          {/* Bouton */}
           <button
             type="submit"
             className="w-full px-4 py-2 bg-accent rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark"
