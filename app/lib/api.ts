@@ -7,7 +7,9 @@ const api = axios.create({
 
 // Rafraîchissement du token si expiré
 let isRefreshing = false;
-let failedRequestsQueue: Array<Promise<any>> = [];
+
+  
+  let failedRequestsQueue: Array<Promise<void>> = [];
 
 api.interceptors.response.use(
     response => response, // Tout va bien ? On retourne la réponse normalement.
