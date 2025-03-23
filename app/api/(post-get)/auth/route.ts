@@ -1,4 +1,4 @@
-import { authenticateUser, getUserByEmail } from '@/app/controllers/userController';
+import { authenticateUser, getUserByEmail } from './../../../controllers/userController';
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 

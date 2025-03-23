@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { verifyAccessToken, refreshAccessToken } from '@/app/lib/auth';
+import { verifyAccessToken, refreshAccessToken } from './../../../lib/auth';
 import { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest): Promise<NextResponse> {

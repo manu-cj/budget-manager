@@ -1,9 +1,9 @@
 import { NextResponse } from 'next/server';
 import { User } from '@/app/types/user';
-import { createUser } from '@/app/controllers/userController';
-import { createDefaultBudget } from '@/app/controllers/budgetController'
-import { validateUser } from '@/app/validators/userValidator';
-import { sendMail } from '@/app/lib/sendMail';
+import { createUser } from './../../../controllers/userController';
+import { createDefaultBudget } from './../../../controllers/budgetController'
+import { validateUser } from './../../../validators/userValidator';
+import { sendMail } from './../../../lib/sendMail';
 
 export async function POST(request: Request) {
   const { user, passwordRepeat }: { user: User; passwordRepeat: string } = await request.json();

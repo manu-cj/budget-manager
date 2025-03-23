@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import db from '@/app/lib/db';
-import { Category } from '@/app/types/category';
+import db from './../../../lib/db';
+import { Category } from './../../../types/category';
 
 
 export async function GET() {

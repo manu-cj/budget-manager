@@ -1,7 +1,7 @@
-import db from '@/app/lib/db'; 
+import db from './../lib/db'; 
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt'; 
-import { User } from '@/app/types/user';
+import { User } from './../types/user';
 
 const saltRounds = 10; 
 

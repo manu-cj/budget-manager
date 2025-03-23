@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getRevenuesByOffset  } from '@/app/controllers/incomeController';
+import { getRevenuesByOffset  } from './../../../controllers/incomeController';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
