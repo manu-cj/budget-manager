@@ -1,5 +1,5 @@
-import db from '@/app/lib/db';
-import { Budget } from '@/app/types/budget';
+import db from './../lib/db';
+import { Budget } from './../types/budget';
 
 export const createDefaultBudget = async (userId: string) => {
     db.prepare(`

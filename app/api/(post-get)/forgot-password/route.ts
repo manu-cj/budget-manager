@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { sendMail } from "@/app/lib/sendMail";
+import { sendMail } from "./../../../lib/sendMail";
 
 const JWT_SECRET = process.env.FORGOT_PASSWORD_SECRET as string;
 

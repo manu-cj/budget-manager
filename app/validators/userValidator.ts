@@ -1,4 +1,4 @@
-import { User } from '@/app/types/user';
+import { User } from './../types/user';
 
 export const validateUser = (user: User, passwordRepeat: string): string | null => {
   if (!user.first_name || typeof user.first_name !== 'string') {

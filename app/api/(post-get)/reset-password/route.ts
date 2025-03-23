@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { changePasswordWithMail } from '@/app/controllers/userController';
+import { changePasswordWithMail } from './../../../controllers/userController';
 
 const JWT_SECRET = process.env.FORGOT_PASSWORD_SECRET as string;
 

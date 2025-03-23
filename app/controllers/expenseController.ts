@@ -1,6 +1,6 @@
-import db from '@/app/lib/db';
+import db from './../lib/db';
 import { v4 as uuidv4 } from 'uuid';
-import { Expense } from '@/app/types/expense';
+import { Expense } from './../types/expense';
 
 export const createExpense = async (expense: Expense, userId: string): Promise<void> => {
   try {

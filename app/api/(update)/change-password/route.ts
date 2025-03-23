@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
-import { changePassword, verifyPassword } from "@/app/controllers/userController";
+import { changePassword, verifyPassword } from "./../../../controllers/userController";
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
 

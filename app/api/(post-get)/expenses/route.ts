@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
-import { Expense } from '@/app/types/expense';
-import { createExpense, deleteExpense, getExpenses  } from '@/app/controllers/expenseController';
+import { Expense } from './../../../types/expense';
+import { createExpense, deleteExpense, getExpenses  } from './../../../controllers/expenseController';
 import jwt from 'jsonwebtoken';
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
