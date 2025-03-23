@@ -101,7 +101,7 @@ const RemainingBudgetSummary: React.FC<BudgetProps> = ({error, loading, monthlyT
           {/* Bouton d'action */}
           <button
             onClick={() => setShowUpdateBudget(true)}
-            className="bg-accent text-text-light py-3 px-6 rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
+            className="bg-accent text-text py-3 px-6 rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2"
           >
             Mettre à jour le budget
           </button>
