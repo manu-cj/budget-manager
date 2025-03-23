@@ -1,16 +1,16 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from './../../lib/api';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPasswordPage: React.FC = () => {
-    const [password, setPassword] = useState<string>("");
-    const [confirmPassword, setConfirmPassword] = useState<string>("");
-    const [showPassword, setShowPassword] = useState<boolean>(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
-    const [message, setMessage] = useState<string>("");
+    const [password, setPassword] = useState<string>(""); 
+    const [confirmPassword, setConfirmPassword] = useState<string>(""); 
+    const [showPassword, setShowPassword] = useState<boolean>(false); 
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); 
+    const [message, setMessage] = useState<string>(""); 
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
     const router = useRouter();
@@ -41,7 +41,7 @@ const ResetPasswordPage: React.FC = () => {
         <div className="flex items-center justify-center min-h-screen bg-gray-100">
             <div className="w-full max-w-md p-8 space-y-6 bg-white rounded shadow-md">
                 <h2 className="text-2xl font-bold text-center text-text-light">Réinitialiser le mot de passe</h2>
-                <form onSubmit={handleSubmit} className="space-y-4 ">
+                <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                             Nouveau mot de passe
@@ -82,7 +82,7 @@ const ResetPasswordPage: React.FC = () => {
                                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                                 className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
                             >
-                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
                             </button>
                         </div>
                     </div>
@@ -99,4 +99,10 @@ const ResetPasswordPage: React.FC = () => {
     );
 };
 
-export default ResetPasswordPage;
+export default function Page() {
+    return (
+        <Suspense fallback={<div>Chargement...</div>}>
+            <ResetPasswordPage />
+        </Suspense>
+    );
+}
