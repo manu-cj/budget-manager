@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import api from './../../lib/api';
-import { Category } from '@/app/types/category';
+import { Category } from "./../../types/category";
 
 const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [amount, setAmount] = useState<string>('');

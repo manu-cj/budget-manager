@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Budget } from "@/app/types/budget";
+import { Budget } from "./../../types/budget";
 import api from './../../lib/api';
 
 // Mapping des catégories de budget en français

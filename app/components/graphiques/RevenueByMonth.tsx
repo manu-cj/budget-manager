@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import api from './../../lib/api';
-import { Expense } from "@/app/types/expense";
+import { Expense } from "./../../types/expense";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 
 // Fonction pour obtenir les 12 derniers mois dans le bon ordre (du mois actuel au mois le plus ancien)
