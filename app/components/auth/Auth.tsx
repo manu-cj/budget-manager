@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState } from 'react';
-import Signup from '@/app/components/auth/Signup';
-import Login from '@/app/components/auth/Login';
+import Signup from './Signup';
+import Login from './Login';
 
 const Auth: React.FC = () => {
     const [isLogin, setIsLogin] = useState<boolean>(true);

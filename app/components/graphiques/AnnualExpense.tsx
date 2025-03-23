@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import api from './../../lib/api';
-import { Expense } from "@/app/types/expense";
+import { Expense } from "./../../types/expense";
 
 import AddExpenseModal from "../forms/AddExpense";
 import TotalExpenses from "../ui/card/BudgetCard";

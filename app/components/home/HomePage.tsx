@@ -2,8 +2,8 @@
 import MonthlyExpenseSummary from "./MonthlyExpenseSummary";
 import RemainingBudgetSummary from "./RemainingBudgetSummary";
 import MonthlyRevenueSummary from "./MonthlyRevenueSummary";
-import { Expense } from "@/app/types/expense";
-import { Budget } from "@/app/types/budget";
+import { Expense } from "./../../types/expense";
+import { Budget } from "./../../types/budget";
 import { useEffect, useState } from "react";
 import api from './../../lib/api';
 

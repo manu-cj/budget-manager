@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Category } from "@/app/types/category";
+import { Category } from "./../../types/category";
 import api from './../../lib/api';
 
 const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
