@@ -3,6 +3,7 @@ import { User } from '@/app/types/user';
 import { createUser } from '@/app/controllers/userController';
 import { createDefaultBudget } from '@/app/controllers/budgetController'
 import { validateUser } from '@/app/validators/userValidator';
+import { sendMail } from '@/app/lib/sendMail';
 
 export async function POST(request: Request) {
   const { user, passwordRepeat }: { user: User; passwordRepeat: string } = await request.json();
@@ -14,8 +15,16 @@ export async function POST(request: Request) {
 
   await createUser(user);
   await createDefaultBudget(user.id);
+  await sendMail(user.email, 'Bienvenue sur Lubu', `
+    <p>Bonjour ${user.username},</p>
+    <p>Votre compte Lubu a été créé avec succès.</p>
+    <p>Vous pouvez maintenant vous connecter à votre compte en utilisant votre adresse email et votre mot de passe.</p>
+    <p>Si vous avez des questions ou des problèmes, n'hésitez pas à nous contacter.</p>
+    <p>Merci,</p>
+  `);
   return NextResponse.json({ message: 'Utilisateur créé avec succès.' });
 }
+
 
 
 
