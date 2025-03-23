@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 import { Expense } from "@/app/types/expense";
 import TotalExpenses from "../ui/card/BudgetCard";
 import AddRevenue from "../forms/AddRevenue";

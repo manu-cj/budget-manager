@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Budget } from "@/app/types/budget";
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 
 // Mapping des catégories de budget en français
 const categoryTranslations: Record<string, string> = {

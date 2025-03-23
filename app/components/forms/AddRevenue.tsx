@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 import { Category } from '@/app/types/category';
 
 const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {

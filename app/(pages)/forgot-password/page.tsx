@@ -1,7 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { validateFormInput } from '@/app/lib/verifForm';
-import api from '@/app/lib/api';
+import { validateFormInput } from './../../lib/verifForm';
+import api from './../../lib/api';
 
 const ResetPasswordPage: React.FC = () => {
     const [email, setEmail] = useState('');
