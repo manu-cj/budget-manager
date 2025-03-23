@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Profile from '../profile/Profile';
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 
 interface HeaderProps {
     user: {

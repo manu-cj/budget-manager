@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { Category } from "@/app/types/category";
-import api from "@/app/lib/api";
+import api from './../../lib/api';
 
 const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [amount, setAmount] = useState<string>("");

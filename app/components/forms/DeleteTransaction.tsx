@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 
 const DeleteTransaction: React.FC<{ onClose: () => void; transactionId: string; route: string; title: string; price:string }> = ({ onClose, transactionId, route, title, price }) => {
     const handleDelete = async () => {

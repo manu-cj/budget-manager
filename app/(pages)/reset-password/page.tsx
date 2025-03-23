@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import api from "@/app/lib/api";
+import api from './../../lib/api';
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPasswordPage: React.FC = () => {

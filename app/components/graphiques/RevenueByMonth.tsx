@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import api from '@/app/lib/api';
+import api from './../../lib/api';
 import { Expense } from "@/app/types/expense";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 

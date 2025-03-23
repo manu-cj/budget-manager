@@ -1,7 +1,6 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
 import { useEffect, useState } from "react";
-import api from '@/app/lib/api';
-
+import api from './../../lib/api';
 interface Expense {
   category_id: string;
   amount: number;
