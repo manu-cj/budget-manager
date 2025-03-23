@@ -30,7 +30,7 @@ const TotalExpenses: React.FC<TotalExpensesProps> = ({ monthlyTotal, onButton, t
             onClick={onButton}
             className={`${
                 type === 'expense' ? 'bg-red-400 hover:bg-red-500' : 'bg-green-600 hover:bg-green-700'
-                } text-text-light py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2`}
+                } text-text py-3 px-6 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent-dark focus:ring-offset-2`}
         >
             {type === 'expense' ? 'Ajouter une dépense' : 'Ajouter un revenu'}
         </button>

@@ -85,6 +85,16 @@ export async function changePassword(id: string, newPassword: string): Promise<v
     `).run(hashedPassword, id);
 }
 
+
+export async function changePasswordWithMail(mail: string, newPassword: string): Promise<void> {
+  const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
+  db.prepare(`
+      UPDATE users
+      SET password = ?
+      WHERE email = ?
+  `).run(hashedPassword, mail);
+}
+
 export async function verifyPassword(id: string, password: string): Promise<boolean> {
   try {
     const user = db.prepare(`

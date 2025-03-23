@@ -3,10 +3,13 @@
 import { useState, FormEvent } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import api from "@/app/lib/api";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const ResetPasswordPage: React.FC = () => {
     const [password, setPassword] = useState<string>("");
     const [confirmPassword, setConfirmPassword] = useState<string>("");
+    const [showPassword, setShowPassword] = useState<boolean>(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
@@ -23,6 +26,7 @@ const ResetPasswordPage: React.FC = () => {
             const response = await api.post("/api/reset-password", {
                 token,
                 password,
+                confirmPassword
             });
             setMessage(response.data.message);
             setTimeout(() => {
@@ -42,27 +46,45 @@ const ResetPasswordPage: React.FC = () => {
                         <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                             Nouveau mot de passe
                         </label>
-                        <input
-                            type="password"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-accent focus:border-secondary-dark sm:text-sm text-gray-700"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                id="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-accent focus:border-secondary-dark sm:text-sm text-gray-700"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
                     </div>
                     <div>
                         <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
                             Confirmer le mot de passe
                         </label>
-                        <input
-                            type="password"
-                            id="confirmPassword"
-                            value={confirmPassword}
-                            onChange={(e) => setConfirmPassword(e.target.value)}
-                            className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-accent focus:border-secondary-dark sm:text-sm text-gray-700"
-                            required
-                        />
+                        <div className="relative">
+                            <input
+                                type={showConfirmPassword ? "text" : "password"}
+                                id="confirmPassword"
+                                value={confirmPassword}
+                                onChange={(e) => setConfirmPassword(e.target.value)}
+                                className="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-accent focus:border-secondary-dark sm:text-sm text-gray-700"
+                                required
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                className="absolute inset-y-0 right-0 flex items-center px-3 text-gray-500"
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </button>
+                        </div>
                     </div>
                     <button
                         type="submit"

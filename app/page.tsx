@@ -37,12 +37,17 @@ export default function ProtectedPage() {
     setDirection(1); // Animation vers la droite
     if (page === "home") setPage("transaction");
     else if (page === "transaction") setPage("graphique");
+    else if (page === "graphique") setPage("home");
+    console.log("swipe right  + page : ", page);
+    
   };
 
   const handleSwipeLeft = () => {
     setDirection(-1); // Animation vers la gauche
     if (page === "graphique") setPage("transaction");
     else if (page === "transaction") setPage("home");
+    else if (page === "home") setPage("graphique");
+    console.log("swipe left  + page : ", page);
   };
 
   const swipeHandlers = useSwipeable({
@@ -134,15 +139,15 @@ export default function ProtectedPage() {
           {/* Contenu avec animation */}
           <div className="relative flex-grow mt-8 overflow-y-scroll">
             <AnimatePresence initial={false} custom={direction}>
-              <motion.div
+                <motion.div
                 key={page} // Clé unique pour chaque page
                 custom={direction}
-                initial={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
+                initial={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
-                exit={{ x: direction > 0 ? "100%" : "-100%", opacity: 0 }}
+                exit={{ x: direction > 0 ? "-100%" : "100%", opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="absolute w-full h-full"
-              >
+                >
                 {renderPage(page)}
               </motion.div>
             </AnimatePresence>
