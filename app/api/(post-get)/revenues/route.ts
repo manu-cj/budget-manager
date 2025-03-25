@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { createRevenue, deleteRevenue, getRevenues } from "./../../../controllers/incomeController";
 import jwt from "jsonwebtoken";
-import { IRevenue } from "@/app/models/Revenue";
+import { IRevenue } from "./../../../models/Revenue";
+import { connectToDatabase } from "./../../../lib/DbConnect";
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
@@ -58,6 +59,7 @@ export async function POST(request: Request) {
 
 export async function GET(request: Request) {
   try {
+    await connectToDatabase();
     // Récupérer le cookie du token
     const cookies = request.headers.get("cookie");
     const token = cookies
