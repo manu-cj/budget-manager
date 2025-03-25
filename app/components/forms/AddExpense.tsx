@@ -8,7 +8,7 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [amount, setAmount] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [date, setDate] = useState<string>("");
-  const [category_id, setCategory_id] = useState<number>();
+  const [category_id, setCategory_id] = useState<string>();
   const [categories, setCategories] = useState<Array<Category>>([]);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
@@ -17,6 +17,8 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       try {
         const response = await api.get("/api/expense-categories");
         setCategories(response.data);
+        console.log(response.data);
+        
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);
       }
@@ -81,20 +83,20 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               >
                 Catégorie
               </label>
-              <select
+                <select
                 id="category"
                 value={category_id}
-                onChange={(e) => setCategory_id(Number(e.target.value))}
+                onChange={(e) => setCategory_id(e.target.value)}
                 required
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              >
+                >
                 <option value="">Choisissez une catégorie</option>
                 {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id}>
-                    {cat.name}
+                  <option key={cat._id} value={cat._id}>
+                  {cat.name}
                   </option>
                 ))}
-              </select>
+                </select>
               {errors.category_id && (
                 <p className="text-red-500 text-xs italic">{errors.category_id}</p>
               )}

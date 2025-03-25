@@ -6,6 +6,7 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -18,6 +19,7 @@ const Login: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null); // Reset error state
     try {
       const response = await axios.post("/api/auth", {
         email,
@@ -27,6 +29,7 @@ const Login: React.FC = () => {
       window.location.reload();
     } catch (error) {
       console.error("Erreur lors de la connection :", error);
+      setError("Erreur lors de la connexion. Veuillez vérifier vos identifiants.");
     }
     console.log("Email:", email);
     console.log("Password:", password);
@@ -92,6 +95,13 @@ const Login: React.FC = () => {
               </button>
             </div>
           </div>
+
+          {/* Message d'erreur */}
+          {error && (
+            <div className="text-red-500 text-sm">
+              {error}
+            </div>
+          )}
 
           {/* Bouton */}
           <button

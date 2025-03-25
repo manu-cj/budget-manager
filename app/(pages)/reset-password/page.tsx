@@ -10,7 +10,8 @@ const ResetPasswordPage: React.FC = () => {
     const [confirmPassword, setConfirmPassword] = useState<string>(""); 
     const [showPassword, setShowPassword] = useState<boolean>(false); 
     const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false); 
-    const [message, setMessage] = useState<string>(""); 
+    const [success, setSuccess] = useState<string>("");
+    const [error, setError] = useState<string>("");
     const searchParams = useSearchParams();
     const token = searchParams.get("token");
     const router = useRouter();
@@ -18,7 +19,7 @@ const ResetPasswordPage: React.FC = () => {
     const handleSubmit = async (e: FormEvent) => {
         e.preventDefault();
         if (password !== confirmPassword) {
-            setMessage("Les mots de passe ne correspondent pas");
+            setError("Les mots de passe ne correspondent pas");
             return;
         }
 
@@ -28,12 +29,12 @@ const ResetPasswordPage: React.FC = () => {
                 password,
                 confirmPassword
             });
-            setMessage(response.data.message);
+            setSuccess(response.data.message);
             setTimeout(() => {
-                router.push("/login");
+                router.push("/");
             }, 2000);
         } catch {
-            setMessage("Erreur lors de la réinitialisation du mot de passe");
+            setError("Erreur lors de la réinitialisation du mot de passe");
         }
     };
 
@@ -93,7 +94,8 @@ const ResetPasswordPage: React.FC = () => {
                         Réinitialiser le mot de passe
                     </button>
                 </form>
-                {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+                    {error && <p className="mt-4 text-center text-green-500">{error}</p>}
+                    {success && <p className="mt-4 text-center text-green-500">{success}</p>}
             </div>
         </div>
     );

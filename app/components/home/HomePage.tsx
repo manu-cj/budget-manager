@@ -126,6 +126,7 @@ const HomePage: React.FC = () => {
             .reduce((acc, [, value]) => acc + value, 0);
 
           setTotalBudget(total);
+          
         } else if (response.status === 401) {
           setErrorBudget(response.data.error);
         } else {
