@@ -94,49 +94,49 @@ export default function ProtectedPage() {
           className="flex flex-col items-center w-full  min-h-screen bg-background text-primary"
         >
           {/* Barre de navigation */}
-          <div className="flex justify-center items-center  w-3/4">
-            <ul className="flex space-x-4 bg-secondary rounded-lg shadow-md px-8 py-2">
-              <li>
-                <h2
-                  onClick={() => setPage("transaction")}
-                  className={`cursor-pointer text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
-                    ${
-                      page === "transaction"
-                        ? "text-accent-dark font-bold border-b-2 border-accent"
-                        : "text-text-muted hover:text-accent-dark"
-                    }`}
-                >
-                  Transactions
-                </h2>
+            <div className="flex justify-center items-center w-full md:w-3/4 px-4">
+            <ul className="flex flex-wrap justify-center space-x-2 md:space-x-4 bg-secondary rounded-lg shadow-md px-4 md:px-8 py-2">
+              <li className="mb-2 md:mb-0">
+              <h2
+                onClick={() => setPage("transaction")}
+                className={`cursor-pointer text-base md:text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
+                ${
+                  page === "transaction"
+                  ? "text-accent-dark font-bold border-b-2 border-accent"
+                  : "text-text-muted hover:text-accent-dark"
+                }`}
+              >
+                Transactions
+              </h2>
               </li>
-              <li>
-                <h1
-                  onClick={() => setPage("home")}
-                  className={`cursor-pointer text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
-                    ${
-                      page === "home"
-                        ? "text-accent-dark font-bold border-b-2 border-accent"
-                        : "text-text-muted hover:text-accent-dark"
-                    }`}
-                >
-                  Résumé
-                </h1>
+              <li className="mb-2 md:mb-0">
+              <h1
+                onClick={() => setPage("home")}
+                className={`cursor-pointer text-base md:text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
+                ${
+                  page === "home"
+                  ? "text-accent-dark font-bold border-b-2 border-accent"
+                  : "text-text-muted hover:text-accent-dark"
+                }`}
+              >
+                Résumé
+              </h1>
               </li>
-              <li>
-                <h2
-                  onClick={() => setPage("graphique")}
-                  className={`cursor-pointer text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
-                    ${
-                      page === "graphique"
-                        ? "text-accent-dark font-bold border-b-2 border-accent"
-                        : "text-text-muted hover:text-accent-dark"
-                    }`}
-                >
-                  Graphique
-                </h2>
+              <li className="mb-2 md:mb-0">
+              <h2
+                onClick={() => setPage("graphique")}
+                className={`cursor-pointer text-base md:text-lg font-semibold px-2 py-2 transition duration-200 ease-in-out 
+                ${
+                  page === "graphique"
+                  ? "text-accent-dark font-bold border-b-2 border-accent"
+                  : "text-text-muted hover:text-accent-dark"
+                }`}
+              >
+                Graphique
+              </h2>
               </li>
             </ul>
-          </div>
+            </div>
 
           {/* Contenu avec animation */}
           <div className="relative flex-grow mt-8 overflow-y-scroll w-full">
