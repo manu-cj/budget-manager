@@ -8,7 +8,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [amount, setAmount] = useState<string>('');
   const [description, setDescription] = useState<string>('');
   const [date, setDate] = useState<string>('');
-  const [category_id, setCategory_id] = useState<number>();
+  const [category_id, setCategory_id] = useState<string>();
   const [categories, setCategories] = useState<Array<Category>>([]);
 
 
@@ -56,7 +56,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 <select
                   id="category"
                   value={category_id}
-                  onChange={(e) => setCategory_id(Number(e.target.value))}
+                  onChange={(e) => setCategory_id(e.target.value)}
                   required
                   className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 >
@@ -64,7 +64,7 @@ const AddRevenue: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                     Choisissez une catégorie
                   </option>
                   {categories.map((cat) => (
-                    <option key={cat.id} value={cat.id}>
+                    <option key={cat._id} value={cat._id}>
                       {cat.name}
                     </option>
                   ))}

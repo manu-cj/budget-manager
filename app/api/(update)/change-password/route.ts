@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { changePassword, verifyPassword } from "./../../../controllers/userController";
+import { sendMail } from "@/app/lib/sendMail";
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
 
@@ -54,6 +55,11 @@ export async function PUT(request: Request) {
     }
 
     await changePassword(userId, newPassword);
+    await sendMail(
+      decoded.email,
+      "Modification du mot de passe",
+      "Votre mot de passe a été modifié si vous n'êtes pas à l'origine de cette action, veuillez contacter le support."
+    );
 
     return NextResponse.json({ message: "Mot de passe modifié avec succès." });
 

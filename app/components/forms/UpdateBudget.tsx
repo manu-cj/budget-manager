@@ -84,9 +84,11 @@ fetchBudget()
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
+    console.log("Budget updated:", budget);
+    
     e.preventDefault();
     try {
-        console.table(budget)
+      console.table(budget)
       const response = await api.patch("/api/budget", budget);
       console.log("Budget updated:", response.data);
       window.location.reload();
@@ -106,7 +108,7 @@ fetchBudget()
     </div>
 
     {/* Contenu du formulaire avec champs modifiables */}
-    <form onSubmit={handleSubmit} className="space-y-6 flex-1 overflow-auto">
+    <form className="space-y-6 flex-1 overflow-auto">
       {Object.keys(budget).map((key) => (
         <div key={key} className="flex flex-col">
           <label
@@ -138,6 +140,7 @@ fetchBudget()
         Annuler
       </button>
       <button
+      onClick={handleSubmit}
         type="submit"
         className="w-1/2 sm:w-auto bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold py-2 px-4 rounded-lg shadow-md hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition"
       >

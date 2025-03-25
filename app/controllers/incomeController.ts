@@ -1,58 +1,53 @@
-import db from "./../lib/db";
-import { v4 as uuidv4 } from "uuid";
-import { Revenue } from "../types/revenue";
 
-export const createRevenue = async ( revenue: Revenue, userId: string ): Promise<void> => {
+
+import Revenue from "../models/Revenue";
+import { IRevenue } from "../models/Revenue";
+
+export const createRevenue = async (revenue: IRevenue, userId: string) => {
   try {
-    const id = uuidv4();
-    db.prepare(
-        `INSERT INTO revenues (id, amount, description, date, user_id, category_id) VALUES (?, ?, ?, ?, ?, ?)`
-    ).run( id, revenue.amount, revenue.description, revenue.date, userId, revenue.category_id );
+    const newRevenue = new Revenue({
+      amount: revenue.amount,
+      description: revenue.description,
+      date: revenue.date,
+      user_id: userId,
+      category_id: revenue.category_id,
+    });
+    await newRevenue.save();
   } catch (error) {
-    console.error("Erreur lors de l'ajout de la dépense :", error);
+    console.error("Erreur lors de l'ajout du revenu :", error);
     throw error;
   }
 };
 
-export const getRevenues = async (userId: string): Promise<Revenue[]> => {
+export const getRevenues = async (userId: string) => {
   try {
-    const revenues = db
-      .prepare(
-        `SELECT * FROM revenues WHERE user_id = ?`
-      ).all(userId) as Revenue[];
-    return revenues;
+    return await Revenue.find({ user_id: userId });
   } catch (error) {
-    console.error("Erreur lors de la récupération des dépenses :", error);
+    console.error("Erreur lors de la récupération des revenus :", error);
     throw error;
   }
 };
 
-export const getRevenuesByOffset = async (
-  userId: string,
-  limit: number,  
-  offset: number   
-): Promise<Revenue[]> => {
+export const getRevenuesByOffset = async (userId: string, limit: number, offset: number) => {
   try {
-    const revenues = db.prepare(`
-      SELECT * FROM revenues 
-      WHERE user_id = ?
-      ORDER BY DATE(date) DESC 
-      LIMIT ? OFFSET ?
-    `).all(userId, limit, offset) as Revenue[];
-    return revenues;
+    return await Revenue.find({ user_id: userId })
+      .sort({ date: -1 })
+      .limit(limit)
+      .skip(offset);
   } catch (error) {
-    console.error('Erreur lors de la récupération des revenues :', error);
+    console.error("Erreur lors de la récupération des revenus :", error);
     throw error;
   }
 };
 
-export const deleteRevenue = async (revenueId: string, userId: string): Promise<void> => {
+export const deleteRevenue = async (revenueId: string, userId: string) => {
   try {
-    db.prepare(`
-      DELETE FROM revenues WHERE id = ? AND user_id = ?
-    `).run(revenueId, userId);
+    const result = await Revenue.findOneAndDelete({ _id: revenueId, user_id: userId });
+    if (result.deletedCount === 0) {
+      throw new Error("Le revenu n'a pas été trouvé ou vous n'êtes pas autorisé à le supprimer");
+    }
   } catch (error) {
-    console.error('Erreur lors de la suppression de la dépense :', error);
+    console.error("Erreur lors de la suppression du revenu :", error);
     throw error;
   }
 };

@@ -6,7 +6,7 @@ type SignupUser = Omit<
   User,
   "id" | "created_at" | "updated_at" | "is_active"
 > & {
-  passwordRepeat: string; // Ajout du champ pour la répétition du mot de passe
+  passwordRepeat: string;
 };
 
 const Signup: React.FC = () => {
@@ -19,6 +19,9 @@ const Signup: React.FC = () => {
     passwordRepeat: "",
   });
 
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setUser((prevUser) => ({
@@ -28,16 +31,17 @@ const Signup: React.FC = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log(user);
-
     e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
     if (user.password !== user.passwordRepeat) {
-      console.error("Les mots de passe ne correspondent pas.");
+      setError("Les mots de passe ne correspondent pas.");
       return;
     }
 
     try {
-      const response = await axios.post("/api/users", {
+      await axios.post("/api/users", {
         user: {
           first_name: user.first_name,
           last_name: user.last_name,
@@ -47,17 +51,18 @@ const Signup: React.FC = () => {
         },
         passwordRepeat: user.passwordRepeat,
       });
-      console.log("Compte créé avec succès :", response.data);
-    } catch (error) {
-      console.error("Erreur lors de la création du compte :", error);
+      setSuccess("Compte créé avec succès !");
+    } catch  {
+      setError("Erreur lors de la création du compte.");
     }
   };
 
   return (
     <div className="flex items-center justify-center bg-primary">
-      <div className="w-full max-w-md p-8 space-y-6 bg-primary-light ">
+      <div className="w-full max-w-md p-8 space-y-6 bg-primary-light">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Prénom et nom */}
+          {error && <div className="text-red-500">{error}</div>}
+          {success && <div className="text-green-500">{success}</div>}
           <div className="flex space-x-4">
             <div className="w-1/2">
               <label
@@ -73,7 +78,8 @@ const Signup: React.FC = () => {
                 value={user.first_name}
                 onChange={handleChange}
                 className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-                placeholder="First name"
+                placeholder="Prénom"
+                required
               />
             </div>
             <div className="w-1/2">
@@ -90,12 +96,11 @@ const Signup: React.FC = () => {
                 value={user.last_name}
                 onChange={handleChange}
                 className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-                placeholder="Last name"
+                placeholder="Nom"
+                required
               />
             </div>
           </div>
-  
-          {/* Nom d'utilisateur */}
           <div>
             <label
               htmlFor="username"
@@ -110,11 +115,10 @@ const Signup: React.FC = () => {
               value={user.username}
               onChange={handleChange}
               className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-              placeholder="Choose a username"
+              placeholder="Choisissez un nom d'utilisateur"
+              required
             />
           </div>
-  
-          {/* Email */}
           <div>
             <label
               htmlFor="email"
@@ -129,62 +133,56 @@ const Signup: React.FC = () => {
               value={user.email}
               onChange={handleChange}
               className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-              placeholder="Enter your email"
+              placeholder="Entrez votre email"
+              required
             />
           </div>
-  
-          {/* Mot de passe */}
-          
-            <div className="w-full">
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-text-light"
-              >
-                Mot de passe
-              </label>
-              <input
-                type="password"
-                id="password"
-                name="password"
-                value={user.password}
-                onChange={handleChange}
-                className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-                placeholder="Password"
-              />
-            </div>
-            <div className="w-full">
-              <label
-                htmlFor="passwordRepeat"
-                className="block text-sm font-medium text-text-light"
-              >
-                Répéter le mot de passe
-              </label>
-              <input
-                type="password"
-                id="passwordRepeat"
-                name="passwordRepeat"
-                value={user.passwordRepeat}
-                onChange={handleChange}
-                className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
-                placeholder="Repeat password"
-              />
-            </div>
-         
+          <div className="w-full">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-text-light"
+            >
+              Mot de passe
+            </label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={user.password}
+              onChange={handleChange}
+              className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
+              placeholder="Mot de passe"
+              required
+            />
+          </div>
+          <div className="w-full">
+            <label
+              htmlFor="passwordRepeat"
+              className="block text-sm font-medium text-text-light"
+            >
+              Répéter le mot de passe
+            </label>
+            <input
+              type="password"
+              id="passwordRepeat"
+              name="passwordRepeat"
+              value={user.passwordRepeat}
+              onChange={handleChange}
+              className="w-full px-3 py-2 mt-1 bg-secondary-light border border-secondary-dark rounded-lg text-primary focus:outline-none focus:ring-2 focus:ring-accent"
+              placeholder="Répéter le mot de passe"
+              required
+            />
+          </div>
           <button
             type="submit"
             className="w-full px-4 py-2 bg-accent rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark"
           >
             Sign Up
           </button>
-          
         </form>
-        
       </div>
-      
     </div>
-    
-  );  
-  
+  );
 };
 
 export default Signup;

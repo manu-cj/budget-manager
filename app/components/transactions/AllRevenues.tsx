@@ -15,11 +15,11 @@ import DeleteTransaction from "../forms/DeleteTransaction";
 
 
 type Expense = {
-  id: number;
+  _id: string;
   description: string;
   amount: number;
   date: string;
-  category_id: number;
+  category_id: string;
 };
 
 const AllRevenues: React.FC = () => {
@@ -33,7 +33,7 @@ const AllRevenues: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string>('');
   const [transactionTitle, setTransactionTitle] = useState<string>('');
   const [transactionPrice, setTransactionPrice] = useState<string>('');
-  const loadedIds = useRef(new Set<number>());
+  const loadedIds = useRef(new Set<string>());
 
   const categoryIcons: Record<string, JSX.Element> = {
     1: <FaMoneyBillWave className="text-green-500 text-2xl md:text-3xl" />,
@@ -43,7 +43,7 @@ const AllRevenues: React.FC = () => {
     5: <FaCube className="text-gray-500 text-2xl md:text-3xl" />,
   };
 
-  const getIconByCategory = (categoryId: number) =>
+  const getIconByCategory = (categoryId: string) =>
     categoryIcons[categoryId] || (
       <FaQuestionCircle className="text-gray-500 text-2xl md:text-3xl" />
     );
@@ -63,7 +63,7 @@ const AllRevenues: React.FC = () => {
       if (response.status === 200) {
         const fetchedExpenses = response.data.expense;
         const newExpenses = fetchedExpenses.filter(
-          (expense: Expense) => !loadedIds.current.has(expense.id)
+          (expense: Expense) => !loadedIds.current.has(expense._id)
         );
 
         if (newExpenses.length === 0) {
@@ -71,7 +71,7 @@ const AllRevenues: React.FC = () => {
         } else {
           setExpenses((prev) => [...prev, ...newExpenses]);
           newExpenses.forEach((expense: Expense) =>
-            loadedIds.current.add(expense.id)
+            loadedIds.current.add(expense._id)
           );
           setOffset((prev) => prev + newExpenses.length);
         }
@@ -118,7 +118,7 @@ const AllRevenues: React.FC = () => {
         <ul className="space-y-2">
           {expenses.map((expense, index) => (
             <li
-            key={`${expense.id}-${index}`}
+            key={`${expense._id}-${index}`}
             className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200 relative group"
           >
             <div className="flex items-center space-x-4">
@@ -140,7 +140,7 @@ const AllRevenues: React.FC = () => {
               className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute right-2"
               onClick={() => {
                 setShowDeleteTransaction(true);
-                setTransactionId(expense.id.toString());
+                setTransactionId(expense._id.toString());
                 setTransactionTitle(expense.description);
                 setTransactionPrice(expense.amount.toFixed(2));
               }}

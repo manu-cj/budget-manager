@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { Revenue } from "./../../../types/revenue";
 import { createRevenue, deleteRevenue, getRevenues } from "./../../../controllers/incomeController";
 import jwt from "jsonwebtoken";
+import { IRevenue } from "@/app/models/Revenue";
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     }
 
     const userId = decoded.id;
-    const revenue: Revenue = await request.json();
+    const revenue: IRevenue = await request.json();
     await createRevenue(revenue, userId);
     console.log("Decoded JWT:", decoded);
     return NextResponse.json({

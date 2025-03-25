@@ -8,7 +8,7 @@ interface Expense {
 }
 
 interface Category {
-  id: string;
+  _id: string;
   name: string;
 }
 
@@ -47,22 +47,29 @@ const AnnualExpensesByCategory: React.FC = () => {
         const expensesByCategory: { [key: string]: number } = {};
 
         fetchedCategories.forEach((category) => {
-          expensesByCategory[category.id] = 0;
+          expensesByCategory[category._id] = 0;
         });
 
         const currentDate = new Date();
         const lastYearDate = new Date();
         lastYearDate.setFullYear(currentDate.getFullYear() - 1);
 
+        
+
         fetchedExpenses.forEach((expense) => {
           const expenseDate = new Date(expense.date);
-          if (expenseDate >= lastYearDate && expenseDate <= currentDate) {
+          if (expenseDate >= lastYearDate ) {
+           
+            console.log(expense.amount);
+            
             expensesByCategory[expense.category_id] += expense.amount;
           }
         });
 
         setCategories(fetchedCategories);
         setExpensesByCategory(expensesByCategory);
+        console.log(expensesByCategory);
+        
       } catch  {
         setError("Erreur lors de la récupération des données");
       } finally {
@@ -75,7 +82,7 @@ const AnnualExpensesByCategory: React.FC = () => {
 
   const chartData = categories.map((category) => ({
     name: category.name,
-    value: expensesByCategory[category.id] || 0
+    value: expensesByCategory[category._id] || 0
   }));
 
   return (
@@ -109,12 +116,12 @@ const AnnualExpensesByCategory: React.FC = () => {
         <div className="mt-4">
           <ul className="flex flex-col">
             {categories.map((category, index) => (
-              <li key={category.id} className="flex items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2 px-2">
+              <li key={category._id} className="flex items-center w-full sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-2 px-2">
             <span 
               className="inline-block w-3 h-3 mr-2 rounded-full" 
               style={{ backgroundColor: COLORS[index % COLORS.length] }}
             ></span>
-            <span className="text-sm sm:text-base md:text-lg font-medium">{category.name} : {expensesByCategory[category.id] || 0} €</span>
+            <span className="text-sm sm:text-base md:text-lg font-medium">{category.name} : {expensesByCategory[category._id] || 0} €</span>
               </li>
             ))}
           </ul>

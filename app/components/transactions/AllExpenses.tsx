@@ -22,11 +22,11 @@ import {
 import DeleteTransaction from "../forms/DeleteTransaction";
 
 type Expense = {
-  id: number;
+  _id: string;
   description: string;
   amount: number;
   date: string;
-  category_id: number;
+  category_id: string;
 };
 
 const AllExpenses: React.FC = () => {
@@ -40,26 +40,26 @@ const AllExpenses: React.FC = () => {
   const [transactionId, setTransactionId] = useState<string>('');
   const [transactionTitle, setTransactionTitle] = useState<string>('');
   const [transactionPrice, setTransactionPrice] = useState<string>('');
-  const loadedIds = useRef(new Set<number>());
+  const loadedIds = useRef(new Set<string>());
 
-  const categoryIcons: Record<number, JSX.Element> = {
-    1: <FaHome className="text-indigo-500 text-2xl md:text-3xl" />,
-    2: <FaUtensils className="text-green-500 text-2xl md:text-3xl" />,
-    3: <FaBus className="text-blue-500 text-2xl md:text-3xl" />,
-    4: <FaHeartbeat className="text-red-500 text-2xl md:text-3xl" />,
-    5: <FaSmile className="text-yellow-500 text-2xl md:text-3xl" />,
-    6: <FaRedo className="text-orange-500 text-2xl md:text-3xl" />,
-    7: <FaShieldAlt className="text-teal-500 text-2xl md:text-3xl" />,
-    8: <FaBook className="text-blue-400 text-2xl md:text-3xl" />,
-    9: <FaMoneyBillWave className="text-green-400 text-2xl md:text-3xl" />,
-    10: <FaPiggyBank className="text-pink-500 text-2xl md:text-3xl" />,
-    11: <FaPaw className="text-brown-500 text-2xl md:text-3xl" />,
-    12: <FaGift className="text-purple-500 text-2xl md:text-3xl" />,
-    13: <FaQuestionCircle className="text-gray-500 text-2xl md:text-3xl" />,
-    14: <FaPlane className="text-cyan-500 text-2xl md:text-3xl" />,
+  const categoryIcons: Record<string, JSX.Element> = {
+    "67e1624441ae0f5f37757667": <FaHome className="text-indigo-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757668": <FaUtensils className="text-green-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757669": <FaBus className="text-blue-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766a": <FaHeartbeat className="text-red-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766b": <FaSmile className="text-yellow-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766c": <FaRedo className="text-orange-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766d": <FaShieldAlt className="text-teal-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766e": <FaBook className="text-blue-400 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f3775766f": <FaMoneyBillWave className="text-green-400 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757670": <FaPiggyBank className="text-pink-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757671": <FaPaw className="text-brown-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757672": <FaGift className="text-purple-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757673": <FaQuestionCircle className="text-gray-500 text-2xl md:text-3xl" />,
+    "67e1624441ae0f5f37757674": <FaPlane className="text-cyan-500 text-2xl md:text-3xl" />,
   };
 
-  const getIconByCategory = (categoryId: number) =>
+  const getIconByCategory = (categoryId: string) =>
     categoryIcons[categoryId] || (
       <FaQuestionCircle className="text-gray-500 text-2xl md:text-3xl" />
     );
@@ -79,7 +79,7 @@ const AllExpenses: React.FC = () => {
       if (response.status === 200) {
         const fetchedExpenses = response.data.expense;
         const newExpenses = fetchedExpenses.filter(
-          (expense: Expense) => !loadedIds.current.has(expense.id)
+          (expense: Expense) => !loadedIds.current.has(expense._id)
         );
 
         if (newExpenses.length === 0) {
@@ -87,7 +87,7 @@ const AllExpenses: React.FC = () => {
         } else {
           setExpenses((prev) => [...prev, ...newExpenses]);
           newExpenses.forEach((expense: Expense) =>
-            loadedIds.current.add(expense.id)
+            loadedIds.current.add(expense._id)
           );
           setOffset((prev) => prev + newExpenses.length);
         }
@@ -136,7 +136,7 @@ const AllExpenses: React.FC = () => {
         <ul className="space-y-2">
           {expenses.map((expense, index) => (
             <li
-              key={`${expense.id}-${index}`}
+              key={`${expense._id}-${index}`}
               className="flex items-center justify-between bg-gray-50 hover:bg-gray-100 p-3 rounded-lg shadow-sm border border-gray-200 transition-all duration-200 relative group"
             >
               <div className="flex items-center space-x-4">
@@ -158,7 +158,7 @@ const AllExpenses: React.FC = () => {
                 className="bg-red-500 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 absolute right-2"
                 onClick={() => {
                   setShowDeleteExpense(true);
-                  setTransactionId(expense.id.toString());
+                  setTransactionId(expense._id);
                   setTransactionTitle(expense.description);
                   setTransactionPrice(expense.amount.toFixed(2));
                 }}
