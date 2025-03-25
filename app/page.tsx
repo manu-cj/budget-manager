@@ -18,15 +18,6 @@ export default function ProtectedPage() {
   const [direction, setDirection] = useState<number>(0); // Direction pour l'animation
   const [showCookieMessage, setShowCookieMessage] = useState<boolean>(true);
 
-  const swipeConfig = {
-    delta: 50, // Sensibilité du swipe (plus la valeur est élevée, moins le swipe est sensible)
-    preventDefaultTouchmoveEvent: true,
-    trackTouch: true,
-    trackMouse: false,
-  };
-
- 
-
   const renderPage = (page: string) => {
     switch (page) {
       case "home":
@@ -56,13 +47,15 @@ export default function ProtectedPage() {
     else if (page === "home") setPage("graphique");
     console.log("swipe left  + page : ", page);
   };
+
   const swipeHandlers = useSwipeable({
     onSwipedLeft: handleSwipeLeft,
     onSwipedRight: handleSwipeRight,
-    ...swipeConfig,
+    delta: 75, // Nombre de pixels pour déclencher le swipe
+
+    trackTouch: true, // Suivre les mouvements du doigt
+    trackMouse: false, // Suivre les mouvements de la souris
   });
-
-
 
   useEffect(() => {
     const checkLogin = async () => {
@@ -98,10 +91,10 @@ export default function ProtectedPage() {
       ) : isLogin ? (
         <div
           {...swipeHandlers}
-          className="flex flex-col items-center min-h-screen bg-background text-primary"
+          className="flex flex-col items-center w-full  min-h-screen bg-background text-primary"
         >
           {/* Barre de navigation */}
-          <div className="flex justify-center i</div>tems-center  w-3/4">
+          <div className="flex justify-center items-center  w-3/4">
             <ul className="flex space-x-4 bg-secondary rounded-lg shadow-md px-8 py-2">
               <li>
                 <h2
@@ -146,7 +139,7 @@ export default function ProtectedPage() {
           </div>
 
           {/* Contenu avec animation */}
-          <div className="relative flex-grow mt-8 overflow-y-scroll">
+          <div className="relative flex-grow mt-8 overflow-y-scroll w-full">
             <AnimatePresence initial={false} custom={direction}>
                 <motion.div
                 key={page} // Clé unique pour chaque page
