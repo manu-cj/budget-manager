@@ -21,7 +21,11 @@ export const createRevenue = async (revenue: IRevenue, userId: string) => {
 
 export const getRevenues = async (userId: string) => {
   try {
-    return await Revenue.find({ user_id: userId });
+    const revenue = await Revenue.find({ user_id: userId })
+    .sort({ date: -1 })
+    .exec();
+
+    return revenue;
   } catch (error) {
     console.error("Erreur lors de la récupération des revenus :", error);
     throw error;
