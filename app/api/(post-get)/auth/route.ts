@@ -7,6 +7,7 @@ const REFRESH_SECRET = process.env.REFRESH_SECRET;
 
 export async function POST(request: Request) {
     try {
+        await connectTo
         const { email, password } = await request.json();
         const isAuthenticated = await authenticateUser(email, password);  // Appel à la fonction du contrôleur
 
