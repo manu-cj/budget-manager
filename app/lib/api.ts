@@ -25,7 +25,7 @@ api.interceptors.response.use(
 
                 try {
                     // Tenter de rafraîchir le token
-                    const { data } = await axios.get("http://localhost:3000/api/protected", { withCredentials: true });
+                    const { data } = await axios.get("/api/protected", { withCredentials: true });
 
                     // Mise à jour des en-têtes avec le nouveau token pour toutes les requêtes échouées
                     api.defaults.headers["Authorization"] = `Bearer ${data.token}`;
