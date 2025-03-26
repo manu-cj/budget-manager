@@ -2,11 +2,14 @@ import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { changePassword, verifyPassword } from "./../../../controllers/userController";
 import { sendMail } from "@/app/lib/sendMail";
+import { connectToDatabase } from './../../../lib/DbConnect';
+
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
 
 export async function PUT(request: Request) {
   try {
+    await connectToDatabase();
     const cookies = request.headers.get('cookie');
     const token = cookies?.split(';').find(cookie => cookie.trim().startsWith('token='))
       ?.split('=')[1];

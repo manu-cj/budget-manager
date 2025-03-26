@@ -1,11 +1,13 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { changePasswordWithMail } from './../../../controllers/userController';
+import { connectToDatabase } from './../../../lib/DbConnect';
 
 const JWT_SECRET = process.env.FORGOT_PASSWORD_SECRET as string;
 
 export async function POST(request: Request) {
     try {
+        await connectToDatabase();
         const { token, password, confirmPassword }: { token: string, password: string, confirmPassword: string } = await request.json();
 
         if (!token) {

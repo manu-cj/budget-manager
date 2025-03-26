@@ -1,8 +1,11 @@
 import { NextResponse } from 'next/server';
 import ExpenseCategory from './../../../models/ExpenseCategory';
+import { connectToDatabase } from './../../../lib/DbConnect';
+
 
 export async function GET() {
   try {
+    await connectToDatabase();
     // Liste des catégories de dépenses par défaut
     const defaultCategories = [
       'Logement', 'Nourriture', 'Transport', 'Santé', 'Loisirs',

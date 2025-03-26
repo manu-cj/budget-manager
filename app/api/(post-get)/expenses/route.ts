@@ -2,12 +2,13 @@ import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
 import { IExpense }  from './../../../models/Expense'; // Assurez-vous que ce modèle existe
 import { createExpense, deleteExpense, getExpenses } from './../../../controllers/expenseController'; // Si vous avez un service pour gérer les dépenses
-import { connectToDatabase } from '@/app/lib/DbConnect';
+import { connectToDatabase } from './../../../lib/DbConnect';
 
 const JWT_SECRET = process.env.AUTH_SECRET as string; // Assurez-vous que la clé est dans vos variables d'environnement
 
 export async function POST(request: Request) {
   try {
+    await connectToDatabase();
     // Récupérer le cookie du token
     const cookies = request.headers.get('cookie');
     const token = cookies?.split(';').find(cookie => cookie.trim().startsWith('token='))?.split('=')[1];

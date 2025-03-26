@@ -52,8 +52,8 @@ const Signup: React.FC = () => {
         passwordRepeat: user.passwordRepeat,
       });
       setSuccess("Compte créé avec succès !");
-    } catch  {
-      setError("Erreur lors de la création du compte.");
+    } catch (error)  {
+      setError(`Erreur lors de la création du compte : ${error}`);
     }
   };
 
@@ -177,7 +177,7 @@ const Signup: React.FC = () => {
             type="submit"
             className="w-full px-4 py-2 bg-accent rounded-lg hover:bg-accent-dark focus:outline-none focus:ring-2 focus:ring-accent-dark"
           >
-            Sign Up
+            Inscription
           </button>
         </form>
       </div>

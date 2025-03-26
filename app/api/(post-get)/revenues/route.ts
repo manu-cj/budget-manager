@@ -8,6 +8,7 @@ const JWT_SECRET = process.env.AUTH_SECRET as string;
 
 export async function POST(request: Request) {
   try {
+    await connectToDatabase();
     // Récupérer le cookie du token
     const cookies = request.headers.get("cookie");
     const token = cookies

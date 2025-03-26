@@ -52,6 +52,7 @@ export async function GET(request: Request) {
 
 export async function PATCH(request: Request) {
   try {
+    await connectToDatabase();
       // Extraire le cookie du token
       const cookies = request.headers.get('cookie');
       const token = cookies?.split(';').find(cookie => cookie.trim().startsWith('token='))?.split('=')[1];

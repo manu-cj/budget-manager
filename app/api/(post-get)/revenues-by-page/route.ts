@@ -1,11 +1,14 @@
 import { NextResponse } from 'next/server';
 import { getRevenuesByOffset  } from './../../../controllers/incomeController';
 import jwt from 'jsonwebtoken';
+import { connectToDatabase } from './../../../lib/DbConnect';
+
 
 const JWT_SECRET = process.env.AUTH_SECRET as string;
 
 export async function GET(request: Request) {
     try {
+      await connectToDatabase();
       const cookies = request.headers.get('cookie');
       const token = cookies?.split(';').find(cookie => cookie.trim().startsWith('token='))
         ?.split('=')[1];
