@@ -51,7 +51,7 @@ export default function ProtectedPage() {
   const swipeHandlers = useSwipeable({
     onSwipedLeft: handleSwipeLeft,
     onSwipedRight: handleSwipeRight,
-    delta: 75, // Nombre de pixels pour déclencher le swipe
+    delta: 100, // Nombre de pixels pour déclencher le swipe
 
     trackTouch: true, // Suivre les mouvements du doigt
     trackMouse: false, // Suivre les mouvements de la souris

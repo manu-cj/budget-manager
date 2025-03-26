@@ -36,11 +36,11 @@ const AllRevenues: React.FC = () => {
   const loadedIds = useRef(new Set<string>());
 
   const categoryIcons: Record<string, JSX.Element> = {
-    1: <FaMoneyBillWave className="text-green-500 text-2xl md:text-3xl" />,
-    2: <FaBriefcase className="text-blue-500 text-2xl md:text-3xl" />,
-    3: <FaChartLine className="text-indigo-500 text-2xl md:text-3xl" />,
-    4: <FaShoppingCart className="text-orange-500 text-2xl md:text-3xl" />,
-    5: <FaCube className="text-gray-500 text-2xl md:text-3xl" />,
+    "67e1834a41ae0f5f3775794d": <FaMoneyBillWave className="text-green-500 text-2xl md:text-3xl" />,
+    "67e1834a41ae0f5f3775794e": <FaBriefcase className="text-blue-500 text-2xl md:text-3xl" />,
+    "67e1834a41ae0f5f3775794f": <FaChartLine className="text-indigo-500 text-2xl md:text-3xl" />,
+    "67e1834a41ae0f5f37757950": <FaShoppingCart className="text-orange-500 text-2xl md:text-3xl" />,
+    "67e1834a41ae0f5f37757951": <FaCube className="text-gray-500 text-2xl md:text-3xl" />,
   };
 
   const getIconByCategory = (categoryId: string) =>
