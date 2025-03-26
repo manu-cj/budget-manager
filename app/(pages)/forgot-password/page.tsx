@@ -27,8 +27,8 @@ const ResetPasswordPage: React.FC = () => {
         setSuccessMessage('');
 
         try {
-            const response = await api.post('/api/forgot-password', { email });
-            console.log('Réinitialisation du mot de passe :', response.data);
+            await api.post('/api/forgot-password', { email });
+            
             setSuccessMessage("Un email de réinitialisation a été envoyé si l'adresse est valide.");
         } catch (error) {
             console.error('Erreur lors de la réinitialisation du mot de passe :', error);

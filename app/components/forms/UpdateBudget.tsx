@@ -41,37 +41,31 @@ const UpdateBudget: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   useEffect(() => {
 const fetchBudget = async () => {
-    try {
-        const response = await api.get("/api/budget");
-        if (response.status === 200) {
-            const budgetData: Budget = response.data.budget
-            setBudget({
-                housing: budgetData.housing,
-                food: budgetData.food,
-                transportation: budgetData.transportation,
-                health: budgetData.health,
-                leisure: budgetData.leisure,
-                subscriptions: budgetData.subscriptions,
-                insurance: budgetData.insurance,
-                education: budgetData.education,
-                repayments: budgetData.repayments,
-                savings: budgetData.savings,
-                animals: budgetData.animals,
-                gifts_and_events: budgetData.gifts_and_events,
-                miscellaneous: budgetData.miscellaneous,
-                vacation: budgetData.vacation
-            });
-        }
-        else if (response.status === 401) {
-            console.log(response.data.error);
-          } else {
-            console.log(response.data.error || "Erreur inconnue");
-          }
-        
-    } catch (error) {
-        console.log(`Erreur lors de la requête, ${error}`);
+  try {
+    const response = await api.get("/api/budget");
+    if (response.status === 200) {
+      const budgetData: Budget = response.data.budget;
+      setBudget({
+        housing: budgetData.housing,
+        food: budgetData.food,
+        transportation: budgetData.transportation,
+        health: budgetData.health,
+        leisure: budgetData.leisure,
+        subscriptions: budgetData.subscriptions,
+        insurance: budgetData.insurance,
+        education: budgetData.education,
+        repayments: budgetData.repayments,
+        savings: budgetData.savings,
+        animals: budgetData.animals,
+        gifts_and_events: budgetData.gifts_and_events,
+        miscellaneous: budgetData.miscellaneous,
+        vacation: budgetData.vacation,
+      });
     }
-}
+  } catch (error) {
+    console.error("Erreur lors de la récupération du budget :", error);
+  }
+};
 fetchBudget()
   }, [])
 
@@ -84,13 +78,13 @@ fetchBudget()
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    console.log("Budget updated:", budget);
+    
     
     e.preventDefault();
     try {
       console.table(budget)
-      const response = await api.patch("/api/budget", budget);
-      console.log("Budget updated:", response.data);
+      await api.patch("/api/budget", budget);
+      
       window.location.reload();
     } catch (error) {
       console.error("Error updating budget:", error);

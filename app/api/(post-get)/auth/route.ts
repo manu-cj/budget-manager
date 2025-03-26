@@ -26,7 +26,7 @@ export async function POST(request: Request) {
       if (!user || !user.id) {
         throw new Error("Utilisateur introuvable.");
       }
-      console.log("user : ", user);
+      
 
       // Générer le token d'accès
       const token = jwt.sign(

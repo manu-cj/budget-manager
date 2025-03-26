@@ -29,7 +29,7 @@ const HomePage: React.FC = () => {
           if (response.status === 200) {
             const fetchedExpenses: Expense[] = response.data.expense;
   
-            console.log(fetchedExpenses);
+            
   
             const currentMonth = new Date().getMonth();
             const currentYear = new Date().getFullYear();
@@ -82,7 +82,7 @@ const HomePage: React.FC = () => {
           if (response.status === 200) {
             const fetchedExpenses: Expense[] = response.data.expense;
   
-            console.log(fetchedExpenses);
+            
   
             const currentMonth = new Date().getMonth();
             const currentYear = new Date().getFullYear();

@@ -22,7 +22,7 @@ const AnnualExpense: React.FC = () => {
                 if (response.status === 200) {
                     const fetchedExpenses: Expense[] = response.data.expense;
 
-                    console.log(fetchedExpenses);
+                    
 
                     const twelveMonthsAgo = new Date();
                     twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
@@ -58,7 +58,7 @@ const AnnualExpense: React.FC = () => {
             if (response.status === 200) {
               const fetchedExpenses: Expense[] = response.data.expense;
     
-              console.log(fetchedExpenses);
+              
     
               const twelveMonthsAgo = new Date();
               twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);

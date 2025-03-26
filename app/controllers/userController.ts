@@ -27,7 +27,7 @@ export const createUser = async (user: IUser): Promise<void> => {
     });
     await newUser.save();
 
-    console.log('Utilisateur ajouté avec succès !');
+    
 
     // Création du budget par défaut pour l'utilisateur
     const newBudget = new Budget({
@@ -35,7 +35,7 @@ export const createUser = async (user: IUser): Promise<void> => {
     });
     await newBudget.save();
 
-    console.log('Budget par défaut créé avec succès !');
+    
   } catch (error) {
     console.error('Erreur lors de la création de l\'utilisateur et du budget:', error);
     throw error;
@@ -74,7 +74,7 @@ export async function changePassword(id: string, newPassword: string): Promise<v
 
   try {
     await Users.updateOne({ _id: id }, { $set: { password: hashedPassword } });
-    console.log('Mot de passe mis à jour avec succès !');
+    
   } catch (error) {
     console.error('Erreur lors du changement de mot de passe :', error);
     throw new Error('Erreur lors du changement de mot de passe');
@@ -88,7 +88,7 @@ export async function changePasswordWithMail(mail: string, newPassword: string):
 
   try {
     await Users.updateOne({ email: mail }, { $set: { password: hashedPassword } });
-    console.log('Mot de passe mis à jour avec succès !');
+    
   } catch (error) {
     console.error('Erreur lors du changement de mot de passe avec l\'email :', error);
     throw new Error('Erreur lors du changement de mot de passe avec l\'email');

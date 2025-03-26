@@ -46,7 +46,7 @@ export async function POST(request: Request) {
 
     // await newExpense.save();  // Sauvegarder dans la base de données MongoDB
 
-    // console.log("Dépense créée:", newExpense);
+    // 
     createExpense(expense, userId);
 
     return NextResponse.json({ message: `Dépense créée avec succès.` });
@@ -85,7 +85,7 @@ export async function POST(request: Request) {
             // Vérifier le token JWT
             decoded = jwt.verify(token, JWT_SECRET) as { id: string; email: string };
         } catch (error) {
-          console.log("error : " + error);
+          
           
             return new NextResponse(JSON.stringify({ error: `Token invalide ou expiré, ${error}` }), {
                 status: 401,
@@ -138,8 +138,8 @@ export async function POST(request: Request) {
       const data = await request.json();
       const userId = decoded.id;
   
-      console.log("Transaction ID: " + data.transactionId);
-      console.log("id :" + data.transactionId);
+      
+      
       
       // Supprimer la dépense de la base de données
       deleteExpense(data.transactionId, userId);

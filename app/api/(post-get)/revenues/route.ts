@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     const userId = decoded.id;
     const revenue: IRevenue = await request.json();
     await createRevenue(revenue, userId);
-    console.log("Decoded JWT:", decoded);
+    
     return NextResponse.json({
       message: `revenu créée avec succès. ${revenue}`,
     });

@@ -17,7 +17,7 @@ const AddExpenseModal: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       try {
         const response = await api.get("/api/expense-categories");
         setCategories(response.data);
-        console.log(response.data);
+        
         
       } catch (error) {
         console.error("Erreur lors de la récupération des catégories :", error);

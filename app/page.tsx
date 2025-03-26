@@ -36,7 +36,7 @@ export default function ProtectedPage() {
     if (page === "home") setPage("transaction");
     else if (page === "transaction") setPage("graphique");
     else if (page === "graphique") setPage("home");
-    console.log("swipe right  + page : ", page);
+    
     
   };
 
@@ -45,7 +45,7 @@ export default function ProtectedPage() {
     if (page === "graphique") setPage("transaction");
     else if (page === "transaction") setPage("home");
     else if (page === "home") setPage("graphique");
-    console.log("swipe left  + page : ", page);
+    
   };
 
   const swipeHandlers = useSwipeable({
@@ -80,7 +80,7 @@ export default function ProtectedPage() {
 
     checkLogin();
   }, []);
-  console.log(user);
+  
   
   return (
     <>

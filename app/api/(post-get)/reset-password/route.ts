@@ -34,7 +34,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: "Token invalide ou expiré." }, { status: 400 });
         }
 
-        console.log("Email extrait du token :", decoded.email);
+        
 
         await changePasswordWithMail(decoded.email, password);
         

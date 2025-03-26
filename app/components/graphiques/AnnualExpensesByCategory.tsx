@@ -60,7 +60,7 @@ const AnnualExpensesByCategory: React.FC = () => {
           const expenseDate = new Date(expense.date);
           if (expenseDate >= lastYearDate ) {
            
-            console.log(expense.amount);
+            
             
             expensesByCategory[expense.category_id] += expense.amount;
           }
@@ -68,7 +68,7 @@ const AnnualExpensesByCategory: React.FC = () => {
 
         setCategories(fetchedCategories);
         setExpensesByCategory(expensesByCategory);
-        console.log(expensesByCategory);
+        
         
       } catch  {
         setError("Erreur lors de la récupération des données");

@@ -9,7 +9,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const user = verifyAccessToken(token);
 
     if (user) {
-        console.log(" user : ", user);
+        
         
         return NextResponse.json({ email: user.email, username: user.username, message: `Bienvenue, ${user.username}!` });
     }

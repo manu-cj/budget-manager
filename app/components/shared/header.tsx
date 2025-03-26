@@ -20,8 +20,8 @@ const Header: React.FC<HeaderProps> = ({ user }) => {
 
     const logout = async () => {
         try {
-            const response = await api.get("/api/logout");
-            console.log("Déconnexion réussie :", response.data);
+            await api.get("/api/logout");
+            
             window.location.reload();
             
         } catch (error) {

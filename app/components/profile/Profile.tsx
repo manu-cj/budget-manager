@@ -39,10 +39,10 @@ const Profile: React.FC<ProfileProps> = ({ show, handleClose, user }) => {
             confirmPassword,
         })
         .then((response) => {
-          console.log(response);
+          
           
             if (response.status === 200) {
-                console.log("Mot de passe changé avec succès.");
+                
                 setError("");
                 setOldPassword("");
                 setNewPassword("");

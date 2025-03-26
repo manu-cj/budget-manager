@@ -21,18 +21,18 @@ const Login: React.FC = () => {
     e.preventDefault();
     setError(null); // Reset error state
     try {
-      const response = await axios.post("/api/auth", {
+      await axios.post("/api/auth", {
         email,
         password,
       });
-      console.log("Connexion réussi :", response.data);
+      
       window.location.reload();
     } catch (error) {
       console.error("Erreur lors de la connection :", error);
       setError("Erreur lors de la connexion. Veuillez vérifier vos identifiants.");
     }
-    console.log("Email:", email);
-    console.log("Password:", password);
+    
+    
   };
 
   return (

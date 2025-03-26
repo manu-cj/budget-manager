@@ -80,8 +80,8 @@ export async function PATCH(request: Request) {
       // Lire les données du corps de la requête
       const body = await request.json();
       const budget = body;  // Assure-toi que ces champs sont envoyés dans la requête
-      console.log('Données de budget : ', budget);
-      // console.log('Mise à jour du budget : ', body.amount, body.category);
+      
+      // 
       if (!budget ) {
           return new NextResponse(JSON.stringify({ error: "Données manquantes pour la mise à jour" }), {
               status: 400,

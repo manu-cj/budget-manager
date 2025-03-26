@@ -60,7 +60,7 @@ revenueCategories.forEach(category => {
     `).run(category);
 });
 
-console.log('Les catégories de dépenses et de revenus ont été ajoutées avec succès.');
+
 
 // Création de la table des dépenses
 db.prepare(`
